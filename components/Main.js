@@ -68,7 +68,7 @@ export default function Main({dieOne, dieTwo, setDieOne, setDieTwo, round, setRo
                     </div>
                 </div>
             </div>
-            <p id="total">第 <span>{round}</span> 次，下一个: <span>{currentPlayer}</span></p>
+            <p id="total">第 <span style={{fontWeight: 'bold'}}>{round}</span> 次，下一个: <span style={{fontWeight: 'bold'}}>{currentPlayer}</span></p>
             <p className="hint">老点大爷帅气头像摇骰子</p>
             <button onClick={roll}><Image src="/yyds.jpg" alt="zhongge" width={111} height={97} /></button>
             <div className='button-wrapper'>
