@@ -14,8 +14,8 @@ export default function Dice({diceRecord, setView}) {
                         diceRecord.map((data, index) => {
                             return (
                                 <tr key={index * 397}>
-                                    <td key={index + 1000}>{index + 2}</td>
-                                    <td className="times" key={index + 200}>{data}</td>
+                                    <td>{index + 2}</td>
+                                    <td className="times">{data}</td>
                                 </tr>
                             )
                         })

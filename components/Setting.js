@@ -1,52 +1,6 @@
 import styles from '../styles/Setting.module.css';
-import { useState } from 'react';
 
-export default function Setting({playerSlect, playerList, setIndex, currentPlayer, setPlayerList, setPlayerSlect, setCurrentPlayer, setDiceRecord, setView, setRound, setDiceData}) {
-
-    let [animation, setAnimation] = useState(Array(6).fill(false));
-
-    let playerSelectHandler = (e) => {
-
-        let array = [];
-        let clone = playerList;
-    
-        clone.push(e);
-    
-        for (let i = 0; i < playerSlect.length; i++) {
-          if (playerSlect[i] !== e) {
-            array.push(playerSlect[i]);
-          }
-        }
-    
-        setPlayerSlect(array);
-        setPlayerList(clone);
-    }
-
-    let playerListHandler = (v, i) => {
-
-        setCurrentPlayer(v);
-        let clone = Array(playerList.length).fill(false);
-        clone[i] = !clone[i];
-        setAnimation(clone);
-
-    }
-
-    let reset = () => {
-
-        setPlayerList([]);
-        setPlayerSlect(['仲', '高', '宇', '敏', '霞', '炜']);
-    
-    }
-
-    let set = () => {
-
-        setView('main');
-        setRound(0);
-        setDiceRecord(Array(11).fill(0));
-        setIndex(playerList.indexOf(currentPlayer));
-        setDiceData([]);
-
-    }
+export default function Setting({playerSlect, playerList, playerListHandler, playerSelectHandler, set, reset, selected}) {
 
     return (
         <div className={styles.wrapper}>
@@ -64,7 +18,7 @@ export default function Setting({playerSlect, playerList, setIndex, currentPlaye
             <div className={styles.playerSlectWrapper}>
                 {playerList.map((player, index) => {
                 return (
-                    <p key={Math.random()} onClick={() => {playerListHandler(player, index)}} className={animation[index] ? `${styles.player} ${styles.transform}` : `${styles.player} ${styles.opacity}`}>
+                    <p key={Math.random()} onClick={() => {playerListHandler(player, index)}} className={selected[index] ? `${styles.player} ${styles.transform}` : `${styles.player} ${styles.opacity}`}>
                     {player}
                     </p>
                 )

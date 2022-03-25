@@ -1,24 +1,6 @@
 import Image from 'next/image'
 
-export default function Main({dieOne, dieTwo, setDieOne, setDieTwo, round, setRound, playerList, setView, index, setIndex, currentPlayer, setCurrentPlayer, animation, setAnimation, setCount}) {
-
-    let roll = () => {
-
-        setDieOne(Math.floor(Math.random()*6));
-        setDieTwo(Math.floor(Math.random()*6));
-        setRound(pre => pre + 1);
-        setCount(pre => pre + 1);
-        setAnimation(true);
-
-        if (index < playerList.length - 1){
-            setIndex(pre => pre + 1);
-            setCurrentPlayer(playerList[index + 1]);
-        } else {
-            setIndex(0);
-            setCurrentPlayer(playerList[0]);
-        };
-
-    }
+export default function Main({dieOne, dieTwo, round, setView, currentPlayer, animation, reroll, roll}) {
 
     return (
         <div className="container">
@@ -73,6 +55,7 @@ export default function Main({dieOne, dieTwo, setDieOne, setDieTwo, round, setRo
             <button onClick={roll}><Image src="/yyds.jpg" alt="zhongge" width={111} height={97} /></button>
             <div className='button-wrapper'>
                 <button onClick={() => setView('setting')} className="reset">设定</button>
+                <button onClick={reroll} className="reset" style={{backgroundColor: '#d00000'}}>重摇</button>
                 <button onClick={() => setView('dice')} className="reset" style={{backgroundColor: '#606c38'}}>次数记录</button>
                 <button onClick={() => setView('player')} style={{backgroundColor: '#2ec4b6'}} className="reset">玩家记录</button>
             </div>
