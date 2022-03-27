@@ -1,14 +1,48 @@
 import Image from 'next/image'
+import Pirate from './Pirate'
+import Politic from './Politic'
+import Science from './Science'
+import Skull from './Skull'
+import Trade from './Trade'
 
-export default function Main({dieOne, dieTwo, round, setView, currentPlayer, animation, reroll, roll}) {
+export default function Knight({dieOne, dieTwo, round, setView, currentPlayer, animation, reroll, roll, dieThree, pirate}) {
+    
+    let x = (pirate % 7 * 37 + 14) + 'px'
+    let y = ((pirate % 7) % 2) ? '40%' : '0'
+
+    let message = (dice, red) => {
+
+       let field = red ? red : 1;
+       let ending = red === 5 ?  " 级可攞卡" : " 级以上可攞卡";
+
+       if ( dice < 3) return "无卡攞！"
+
+       else if (dice === 3) return "贸易（布）" + field + ending
+
+       else if (dice === 4) return "政治（币）" + field + ending
+
+       else if (dice === 5) return "科技（纸）" + field + ending
+
+    }
 
     return (
         <div className="container">
-            <p className="bottom-line">去到菉塘,记得naam虾酱哇!</p>
+            <div className='progress'>
+                <div style={{transform: `translate(${x}, ${y})`, zIndex: 999}}><Pirate /></div>
+                <span>大</span>
+                <span>爷</span>
+                <span>世</span>
+                <span>界</span>
+                <span>最</span>
+                <span>威</span>
+                <span>武</span>
+                <span style={{display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '25px'}}>G</span>
+            </div>
+            <p className='message'>{message(dieThree, dieOne)}</p>
             <div className="img-wrapper">
                 <p className="test">{dieOne + dieTwo + 2}</p>
             </div>
-            <div className="dice-wrapper" style={{width: '250px'}}>
+            <div className="dice-wrapper" style={{width: '100%'}}>
                 <div>
                     <div className={6 - dieOne === 1 ? animation ? "dice first six shake" : "dice first six" : "opacity"}>
                         <span></span><span></span><span></span><span></span><span></span><span></span>
@@ -47,6 +81,20 @@ export default function Main({dieOne, dieTwo, round, setView, currentPlayer, ani
                     </div>
                     <div className={6 - dieTwo === 6 ? animation ? "dice second one shake" : "dice second one" : "opacity"}>
                         <span></span>
+                    </div>
+                </div>
+                <div style={{width: '100px', margin: 'auto'}}>
+                    <div className={dieThree < 3 ? animation ? 'dice-card shake' : 'dice-card' : 'opacity'}>
+                        <Skull />
+                    </div>
+                    <div className={dieThree === 3 ? animation ? 'dice-card shake' : 'dice-card' : 'opacity'}>
+                        <Trade />
+                    </div>
+                    <div className={dieThree === 4 ? animation ? 'dice-card shake' : 'dice-card' : 'opacity'}>
+                        <Politic />
+                    </div>
+                    <div className={dieThree === 5 ? animation ? 'dice-card shake' : 'dice-card' : 'opacity'}>
+                        <Science />
                     </div>
                 </div>
             </div>

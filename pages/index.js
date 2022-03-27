@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import Main from '../components/Main'
 import Dice from '../components/Dice'
 import Player from '../components/Player'
+import Knight from '../components/Knight'
 
 export default function Home() {
 
@@ -12,6 +13,7 @@ export default function Home() {
   let [playerList, setPlayerList] = useState([]);
   let [dieOne, setDieOne] = useState(2);
   let [dieTwo, setDieTwo] = useState(3);
+  let [dieThree, setDiceThree] = useState(0);
   let [round, setRound] = useState(0);
   let [view, setView] = useState('setting');
   let [diceRecord, setDiceRecord] = useState(Array(11).fill(0)); 
@@ -21,7 +23,8 @@ export default function Home() {
   let [count, setCount] = useState(0);
   let [diceData, setDiceData] = useState([]);
   let [selected, setSelected] = useState(Array(6).fill(false));
-
+  let [isBasic, setIsBasic] = useState(true);
+  let [pirate, setPirate] = useState(0);
 
   useEffect(() => {
 
@@ -44,6 +47,14 @@ export default function Home() {
         let dataClone = diceData;
         dataClone.push(dieOne + dieTwo + 2);
         setDiceData(dataClone);
+
+    }
+
+    if (!isBasic) {
+
+      if (dieThree < 3) {
+        setPirate(pre => pre + 1);
+      }
 
     }
 
@@ -82,9 +93,15 @@ export default function Home() {
 
   }
 
-  let set = () => {
+  let set = () => {  
 
-      setView('main');
+      if (isBasic) {
+        setView('main');
+      } else {
+        setView('knight');
+        setPirate(0);
+      }
+
       setRound(0);
       setDiceRecord(Array(11).fill(0));
       setIndex(playerList.indexOf(currentPlayer));
@@ -94,7 +111,14 @@ export default function Home() {
 
   let reroll = () => {
 
-      if (round !== 0) {
+    if (round !== 0) {
+
+        if (!isBasic) {
+
+          if (dieThree < 3) pirate ? setPirate(pre => pre - 1) : setPirate(5);
+          setDiceThree(Math.floor(Math.random()*6));
+
+        }
 
         setDieOne(Math.floor(Math.random()*6));
         setDieTwo(Math.floor(Math.random()*6));
@@ -109,7 +133,7 @@ export default function Home() {
         dataClone.pop();
         setDiceData(dataClone);
 
-      }
+    }
 
   }
 
@@ -129,21 +153,28 @@ export default function Home() {
           setCurrentPlayer(playerList[0]);
       };
 
+      if (!isBasic) {
+        setDiceThree(Math.floor(Math.random()*6));
+      }
+
   }
 
   let views = (view) => {
     switch (view) {
       case 'setting':
-        return <Setting playerSlect={playerSlect} playerList={playerList} playerListHandler={playerListHandler} playerSelectHandler={playerSelectHandler} set={set} reset={reset} selected={selected} setView={setView} />;
+        return <Setting playerSlect={playerSlect} playerList={playerList} playerListHandler={playerListHandler} playerSelectHandler={playerSelectHandler} set={set} reset={reset} selected={selected} setView={setView} isBasic={isBasic} setIsBasic={setIsBasic} />;
 
       case 'main':
-        return  <Main dieOne={dieOne} dieTwo={dieTwo} round={round} setView={setView} animation={animation} roll={roll} reroll={reroll} currentPlayer={currentPlayer} />;
+        return <Main dieOne={dieOne} dieTwo={dieTwo} round={round} setView={setView} animation={animation} roll={roll} reroll={reroll} currentPlayer={currentPlayer} />;
+
+      case 'knight':
+        return <Knight dieOne={dieOne} dieTwo={dieTwo} round={round} setView={setView} animation={animation} roll={roll} reroll={reroll} currentPlayer={currentPlayer} dieThree={dieThree} pirate={pirate} />;
 
       case 'dice':
-        return <Dice diceRecord={diceRecord} setView={setView} />;
+        return <Dice diceRecord={diceRecord} setView={setView} isBasic={isBasic} />;
 
       case 'player':
-        return <Player diceData={diceData} setView={setView} />;
+        return <Player diceData={diceData} setView={setView} isBasic={isBasic} />;
     
       default:
         break;

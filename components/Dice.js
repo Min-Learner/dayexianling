@@ -1,4 +1,4 @@
-export default function Dice({diceRecord, setView}) {
+export default function Dice({diceRecord, setView, isBasic}) {
 
     return (
         <div className="table-wrapper">
@@ -22,7 +22,7 @@ export default function Dice({diceRecord, setView}) {
                     }
                 </tbody>
             </table>
-            <button onClick={() => setView('main')} className='buttons'>返回</button>
+            <button onClick={() => isBasic ? setView('main') : setView('knight')} className='buttons'>返回</button>
         </div>
     )
 

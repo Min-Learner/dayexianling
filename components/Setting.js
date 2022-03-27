@@ -1,6 +1,6 @@
 import styles from '../styles/Setting.module.css';
 
-export default function Setting({playerSlect, playerList, playerListHandler, playerSelectHandler, set, reset, selected}) {
+export default function Setting({playerSlect, playerList, playerListHandler, playerSelectHandler, set, reset, selected, isBasic, setIsBasic}) {
 
     return (
         <div className={styles.wrapper}>
@@ -23,6 +23,11 @@ export default function Setting({playerSlect, playerList, playerListHandler, pla
                     </p>
                 )
                 })}
+            </div>
+            <div className='mode-wrapper'>
+                <p style={{fontSize: '16px', color: 'white'}}>选择游戏模式: </p>
+                <button className={isBasic ? 'mode-select selected' : 'mode-select'} onClick={() => setIsBasic(true)}>基本包</button>
+                <button className={isBasic ? 'mode-select' : 'mode-select selected'} onClick={() => setIsBasic(false)}>騎士包</button>
             </div>
             <div className={styles.buttonWrapper}>
                 <button className={styles.button} style={{backgroundColor: '#52b788'}} onClick={set}>确定</button>
