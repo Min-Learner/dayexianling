@@ -36,7 +36,7 @@ export default function Knight({dieOne, dieTwo, round, setView, currentPlayer, a
                 <span>最</span>
                 <span>威</span>
                 <span>武</span>
-                <span style={{display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '25px'}}>G</span>
+                <span style={{border: 'none'}}><Image src='/yyds-modified.png' width={35} height={35} /></span>
             </div>
             <p className='message'>{message(dieThree, dieOne)}</p>
             <div className="img-wrapper">
