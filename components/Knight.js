@@ -5,25 +5,10 @@ import Science from './Science'
 import Skull from './Skull'
 import Trade from './Trade'
 
-export default function Knight({dieOne, dieTwo, round, setView, currentPlayer, animation, reroll, roll, dieThree, pirate}) {
+export default function Knight({dieOne, dieTwo, round, setView, currentPlayer, animation, reroll, roll, dieThree, pirate, cardHint}) {
     
-    let x = (pirate % 7 * 37 + 14) + 'px'
+    let x = (pirate % 7 * 39 + 21) + 'px'
     let y = ((pirate % 7) % 2) ? '40%' : '0'
-
-    let message = (dice, red) => {
-
-       let field = red ? red : 1;
-       let ending = red === 5 ?  " 级可攞卡" : " 级以上可攞卡";
-
-       if ( dice < 3) return "无卡攞！"
-
-       else if (dice === 3) return "贸易（布）" + field + ending
-
-       else if (dice === 4) return "政治（币）" + field + ending
-
-       else if (dice === 5) return "科技（纸）" + field + ending
-
-    }
 
     return (
         <div className="container">
@@ -36,9 +21,9 @@ export default function Knight({dieOne, dieTwo, round, setView, currentPlayer, a
                 <span>最</span>
                 <span>威</span>
                 <span>武</span>
-                <span style={{border: 'none'}}><Image src='/yyds-modified.png' width={35} height={35} /></span>
+                <span style={{border: 'none'}} onClick={() => setView('progress')}><Image src='/daye.png' width={35} height={35} /></span>
             </div>
-            <p className='message'>{message(dieThree, dieOne)}</p>
+            <p className='message'>{cardHint}</p>
             <div className="img-wrapper">
                 <p className="test">{dieOne + dieTwo + 2}</p>
             </div>

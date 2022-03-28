@@ -5,6 +5,7 @@ import Main from '../components/Main'
 import Dice from '../components/Dice'
 import Player from '../components/Player'
 import Knight from '../components/Knight'
+import Progress from '../components/Progress'
 
 export default function Home() {
 
@@ -25,6 +26,10 @@ export default function Home() {
   let [selected, setSelected] = useState(Array(6).fill(false));
   let [isBasic, setIsBasic] = useState(true);
   let [pirate, setPirate] = useState(0);
+  let [trade, setTrade] = useState([]);
+  let [politic, setPolitic] = useState([]);
+  let [science, setScience] = useState([]);
+  let [cardHint, setCardHint] = useState('');
 
   useEffect(() => {
 
@@ -54,7 +59,10 @@ export default function Home() {
 
       if (dieThree < 3) {
         setPirate(pre => pre + 1);
-      }
+        setCardHint('无卡攞！')
+      } else if (dieThree === 3) cardHandle(trade, dieOne, "贸易");
+      else if (dieThree === 4) cardHandle(politic, dieOne, "政治");
+      else if (dieThree === 5) cardHandle(science, dieOne, "科技");
 
     }
 
@@ -62,50 +70,53 @@ export default function Home() {
 
   let playerSelectHandler = (e) => {
 
-      let array = [];
-      let clone = playerList;
+    let array = [];
+    let clone = playerList;
 
-      clone.push(e);
+    clone.push(e);
 
-      for (let i = 0; i < playerSlect.length; i++) {
-        if (playerSlect[i] !== e) {
-          array.push(playerSlect[i]);
-        }
+    for (let i = 0; i < playerSlect.length; i++) {
+      if (playerSlect[i] !== e) {
+        array.push(playerSlect[i]);
       }
+    }
 
-      setPlayerSlect(array);
-      setPlayerList(clone);
+    setPlayerSlect(array);
+    setPlayerList(clone);
   }
 
   let playerListHandler = (v, i) => {
 
-      setCurrentPlayer(v);
-      let clone = Array(playerList.length).fill(false);
-      clone[i] = !clone[i];
-      setSelected(clone);
+    setCurrentPlayer(v);
+    let clone = Array(playerList.length).fill(false);
+    clone[i] = !clone[i];
+    setSelected(clone);
 
   }
 
   let reset = () => {
 
-      setPlayerList([]);
-      setPlayerSlect(players);
+    setPlayerList([]);
+    setPlayerSlect(players);
 
   }
 
   let set = () => {  
 
-      if (isBasic) {
-        setView('main');
-      } else {
-        setView('knight');
-        setPirate(0);
-      }
+    if (isBasic) {
+      setView('main');
+    } else {
+      setView('knight');
+      setPirate(0);
+      setTrade(Array(playerList.length).fill(0));
+      setPolitic(Array(playerList.length).fill(0));
+      setScience(Array(playerList.length).fill(0));
+    }
 
-      setRound(0);
-      setDiceRecord(Array(11).fill(0));
-      setIndex(playerList.indexOf(currentPlayer));
-      setDiceData([]);
+    setRound(0);
+    setDiceRecord(Array(11).fill(0));
+    setIndex(playerList.indexOf(currentPlayer));
+    setDiceData([]);
 
   }
 
@@ -139,23 +150,46 @@ export default function Home() {
 
   let roll = () => {
 
-      setDieOne(Math.floor(Math.random()*6));
-      setDieTwo(Math.floor(Math.random()*6));
-      setRound(pre => pre + 1);
-      setCount(pre => pre + 1);
-      setAnimation(true);
+    setDieOne(Math.floor(Math.random()*6));
+    setDieTwo(Math.floor(Math.random()*6));
+    setRound(pre => pre + 1);
+    setCount(pre => pre + 1);
+    setAnimation(true);
 
-      if (index < playerList.length - 1){
-          setIndex(pre => pre + 1);
-          setCurrentPlayer(playerList[index + 1]);
-      } else {
-          setIndex(0);
-          setCurrentPlayer(playerList[0]);
-      };
+    if (index < playerList.length - 1){
+        setIndex(pre => pre + 1);
+        setCurrentPlayer(playerList[index + 1]);
+    } else {
+        setIndex(0);
+        setCurrentPlayer(playerList[0]);
+    };
 
-      if (!isBasic) {
-        setDiceThree(Math.floor(Math.random()*6));
+    if (!isBasic) {
+      setDiceThree(Math.floor(Math.random()*6));
+    }
+
+  }
+
+  let cardHandle = (field, redDice, which) => {
+
+    let copy = [...field];
+    let list = [];
+    let words = "可以攞" + which + "卡";
+
+    for (let i = 0; i < copy.length; i++) {
+      if (copy[i] !== 0 && copy[i] >= redDice) list.push(playerList[i]);
+    }
+
+    if (!list.length) setCardHint('无人可以攞卡！');
+    else {
+
+      for (let j = 0; j < list.length; j++) {
+        if (!j) words = list[j] + words;
+        else words = list[j] + "、" + words;
       }
+      setCardHint(words);
+
+    }
 
   }
 
@@ -168,13 +202,16 @@ export default function Home() {
         return <Main dieOne={dieOne} dieTwo={dieTwo} round={round} setView={setView} animation={animation} roll={roll} reroll={reroll} currentPlayer={currentPlayer} />;
 
       case 'knight':
-        return <Knight dieOne={dieOne} dieTwo={dieTwo} round={round} setView={setView} animation={animation} roll={roll} reroll={reroll} currentPlayer={currentPlayer} dieThree={dieThree} pirate={pirate} />;
+        return <Knight dieOne={dieOne} dieTwo={dieTwo} round={round} setView={setView} animation={animation} roll={roll} reroll={reroll} currentPlayer={currentPlayer} dieThree={dieThree} pirate={pirate} cardHint={cardHint} />;
 
       case 'dice':
         return <Dice diceRecord={diceRecord} setView={setView} isBasic={isBasic} />;
 
       case 'player':
         return <Player diceData={diceData} setView={setView} isBasic={isBasic} />;
+
+      case 'progress':
+        return <Progress playerList={playerList} trade={trade} setTrade={setTrade} politic={politic} setPolitic={setPolitic} science={science} setScience={setScience} setView={setView} />  
     
       default:
         break;
