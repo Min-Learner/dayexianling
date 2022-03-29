@@ -2,7 +2,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: sans-serif;
+  font-family: serif;
 }
 
 p {
@@ -74,9 +74,8 @@ p {
 
 .bottom-line {
   font-size: 25px;
-  text-align: center;
   font-weight: bold;
-  font-family: 'KaiTi', san-serif;
+  font-family: 'KaiTi', 'FangSong';
 }
 
 .round {
@@ -108,7 +107,6 @@ button {
 
 .test {
   font-size: 100px;
-  font-family: serif;
 }
 
 .hint {
@@ -390,5 +388,5 @@ tbody tr:nth-child(even) {
   font-size: 25px;
   font-weight: bold;
   height: 24px;
-  font-family: 'KaiTi', sans-serif;
+  font-family: 'KaiTi', 'FangSong';
 }
