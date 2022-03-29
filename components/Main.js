@@ -2,11 +2,28 @@ import Image from 'next/image'
 
 export default function Main({dieOne, dieTwo, round, setView, currentPlayer, animation, reroll, roll}) {
 
+    let quotes = [
+        '你疴屎揼到屌啊',
+        '你又老閪我，让你又无知道',
+        '逗逗你嗻啊',
+        '我终于觉得有啲啲仔意思嗲',
+        '你知唔知呢半个钟我点过㗎',
+        '去到菉塘，记得naam虾酱哇',
+        '做咩屌嗰，竟然俾仲哥赢',
+        '垃圾游戏，都无好撩嗰',
+        '冧斜嗰肥佬真真无死得落着',
+        '压三家，标准玩法啊',
+        'やられたらやり返す'
+    ]
+
     return (
         <div className="container">
-            <p className="bottom-line">去到菉塘,记得naam虾酱哇!</p>
-            <div className="img-wrapper">
+            <p className="bottom-line">{quotes[dieOne + dieTwo]}</p>
+            <div className="img-wrapper" style={{  transform: 'translateX(20px)', marginTop: '15px'}}>
                 <p className="test">{dieOne + dieTwo + 2}</p>
+                <div  style={{alignSelf: 'flex-start'}} onClick={() => setView('cheat')}>
+                    <Image src={'/daye.png'} width={40} height={40} />
+                </div>
             </div>
             <div className="dice-wrapper" style={{width: '250px'}}>
                 <div>
@@ -52,7 +69,15 @@ export default function Main({dieOne, dieTwo, round, setView, currentPlayer, ani
             </div>
             <p id="total">第 <span style={{fontWeight: 'bold'}}>{round}</span> 次，下一个: <span style={{fontWeight: 'bold'}}>{currentPlayer}</span></p>
             <p className="hint">老点大爷帅气头像摇骰子</p>
-            <button onClick={roll}><Image src="/yyds.jpg" alt="zhongge" width={111} height={97} /></button>
+            <button onClick={roll}
+                    style={{
+                        padding: 0,
+                        height: '97px',
+                        overflow: 'hidden'
+                    }} 
+            >
+                <Image src="/yyds.jpg" alt="zhongge" width={111} height={97} />
+            </button>
             <div className='button-wrapper'>
                 <button onClick={() => setView('setting')} className="reset">设定</button>
                 <button onClick={reroll} className="reset" style={{backgroundColor: '#d00000'}}>重摇</button>
