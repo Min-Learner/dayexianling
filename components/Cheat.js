@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-export default function Cheat({setView, setDieOne, setDieTwo, setRound, setCount}) {
+export default function Cheat({setView, setDieOne, setDieTwo, setRound, setCount, index, setIndex, playerList, setCurrentPlayer}) {
 
     let [rightClicked, setRightClicked] = useState(Array(6).fill(false))
     let [leftClicked, setLeftClicked] = useState(Array(6).fill(false))
@@ -26,6 +26,8 @@ export default function Cheat({setView, setDieOne, setDieTwo, setRound, setCount
             setCount(pre => pre + 1)
             setRound(pre => pre + 1)
             setView('main')
+            setIndex(pre => pre +1)
+            setCurrentPlayer(playerList[(index + 1) % playerList.length])
         }
 
     }

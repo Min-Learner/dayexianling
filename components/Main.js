@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-export default function Main({dieOne, dieTwo, round, setView, currentPlayer, animation, reroll, roll}) {
+export default function Main({dieOne, dieTwo, round, setView, currentPlayer, animation, reroll, roll, setCurrentPlayer}) {
 
     let quotes = [
         '你疴屎揼到屌啊',
@@ -79,7 +79,7 @@ export default function Main({dieOne, dieTwo, round, setView, currentPlayer, ani
                 <Image src="/yyds.jpg" alt="zhongge" width={111} height={97} />
             </button>
             <div className='button-wrapper'>
-                <button onClick={() => setView('setting')} className="reset">设定</button>
+                <button onClick={() => {setView('setting'); setCurrentPlayer('')}} className="reset">设定</button>
                 <button onClick={reroll} className="reset" style={{backgroundColor: '#d00000'}}>重摇</button>
                 <button onClick={() => setView('dice')} className="reset" style={{backgroundColor: '#606c38'}}>次数记录</button>
                 <button onClick={() => setView('player')} style={{backgroundColor: '#2ec4b6'}} className="reset">玩家记录</button>

@@ -13,7 +13,7 @@ export default function Player({diceData, setView, isBasic}) {
                     {
                         diceData.map((data, index) => {
                             return (
-                                <tr key={index * 357}>
+                                <tr key={index * 7}>
                                     <td>{index + 1}</td>
                                     <td className="times">{data}</td>
                                 </tr>
