@@ -75,7 +75,7 @@ p {
 .bottom-line {
   font-size: 25px;
   font-weight: bold;
-  font-family: 'KaiTi', 'FangSong';
+  font-family: 'KaiTi', 'FangSong', serif;
 }
 
 .round {
@@ -385,8 +385,8 @@ tbody tr:nth-child(even) {
 
 .message {
   margin-top: 25px;
-  font-size: 25px;
+  font-size: 20px;
   font-weight: bold;
   height: 24px;
-  font-family: 'KaiTi', 'FangSong';
+  font-family: 'KaiTi', 'FangSong', serif;
 }

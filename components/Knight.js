@@ -85,7 +85,15 @@ export default function Knight({dieOne, dieTwo, round, setView, currentPlayer, a
             </div>
             <p id="total">第 <span style={{fontWeight: 'bold'}}>{round}</span> 次，下一个: <span style={{fontWeight: 'bold'}}>{currentPlayer}</span></p>
             <p className="hint">老点大爷帅气头像摇骰子</p>
-            <button onClick={roll}><Image src="/yyds.jpg" alt="zhongge" width={111} height={97} /></button>
+            <button onClick={roll}
+                style={{
+                    padding: 0,
+                    height: '97px',
+                    overflow: 'hidden'
+                }}
+            >
+                <Image src="/yyds.jpg" alt="zhongge" width={111} height={97} />
+            </button>
             <div className='button-wrapper'>
                 <button onClick={() => setView('setting')} className="reset">设定</button>
                 <button onClick={reroll} className="reset" style={{backgroundColor: '#d00000'}}>重摇</button>
