@@ -8,7 +8,7 @@ export default function Main({dieOne, dieTwo, round, setView, currentPlayer, ani
         '逗逗你嗻啊',
         '我终于觉得有啲啲仔意思嗲',
         '你知唔知呢半个钟我点过㗎',
-        '去到菉塘，记得naam虾酱哇',
+        '去到菉塘，记得揇虾酱哇',
         '做咩屌嗰，竟然俾仲哥赢',
         '垃圾游戏，都无好撩嗰',
         '冧斜嗰肥佬真真无死得落着',

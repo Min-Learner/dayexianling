@@ -1,11 +1,12 @@
-export default function Player({diceData, setView, isBasic}) {
+export default function Player({diceData, setView, isBasic, startIndex, playerList}) {
 
     return (
         <div className="table-wrapper">
-            <table>
+            <table style={{width: '90%'}}>
                 <thead>
                     <tr>
                         <th>次数</th>
+                        <th>玩家</th>
                         <th>点数</th>
                     </tr>
                 </thead>
@@ -15,6 +16,7 @@ export default function Player({diceData, setView, isBasic}) {
                             return (
                                 <tr key={index * 7}>
                                     <td>{index + 1}</td>
+                                    <td>{playerList[(index + startIndex) % playerList.length]}</td>
                                     <td className="times">{data}</td>
                                 </tr>
                             )
