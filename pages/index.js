@@ -32,18 +32,42 @@ export default function Home() {
   let [science, setScience] = useState([]);
   let [cardHint, setCardHint] = useState('');
   let [startIndex, setStartIndex] = useState();
+  let music = [
+    '曹操1.mp3',
+    '貂蝉1.mp3',
+    '关羽1.mp3',
+    '郭嘉1.mp3',
+    '刘备1.mp3',
+    '鲁肃1.mp3',
+    '马超1.mp3',
+    '孙权1.mp3',
+    '许褚1.mp3',
+    '荀彧1.mp3',
+    '荀彧2.mp3',
+    '张郃1.mp3',
+    '张郃2.mp3',
+    '张角1.mp3',
+    '张角2.mp3',
+    '甄姬1.mp3',
+    '甄姬2.mp3',
+    '甄姬3.mp3',
+    '甄姬4.mp3',
+    '周瑜1.mp3',
+    '诸葛亮1.mp3',
+    '诸葛亮2.mp3'
+  ]
 
   useEffect(() => {
 
-    const sound = new Audio("yyds.m4a");
+    const line = new Audio("/music/" + music[Math.floor(Math.random()*22)]);
+    const sound = new Audio("/music/yyds.m4a");
 
     setTimeout(() => {
         setAnimation(false)
     }, 600);
 
-    if (dieOne + dieTwo == 0 || dieOne + dieTwo == 10) {
-        sound.play();
-    }
+    if (dieOne + dieTwo == 5) sound.play();
+    else line.play();
 
     if (round !== 0) {
 
