@@ -1,9 +1,13 @@
 import styles from '../styles/Setting.module.css';
+import Text from './Text';
 
 export default function Setting({playerSlect, playerList, playerListHandler, playerSelectHandler, set, reset, selected, isBasic, setIsBasic}) {
 
     return (
         <div className={styles.wrapper}>
+            <div style={{width: '80%', marginBottom: '25px'}}>
+                <Text />
+            </div>
             <p className={styles.text}>按座位顺序选择玩家</p>
             <div className={styles.playerSlectWrapper}>
                 {playerSlect.map((player, index) => {

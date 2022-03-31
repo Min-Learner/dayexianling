@@ -4,6 +4,7 @@ import { useRef, useEffect } from 'react'
 
 export default function Main({dieOne, dieTwo, round, setView, currentPlayer, animation, reroll, roll, setCurrentPlayer}) {
 
+    let el = useRef()
     let quotes = [
         '你疴屎揼到屌啊',
         '你又老閪我，让你又无知道',
@@ -11,7 +12,7 @@ export default function Main({dieOne, dieTwo, round, setView, currentPlayer, ani
         '我终于觉得有啲啲仔意思嗲',
         '你知唔知呢半个钟我点过㗎',
         '去到菉塘，记得揇虾酱哇',
-        '做咩屌嗰，竟然俾仲哥赢',
+        '做咩屌嗰，竟然畀仲哥赢',
         '勝ちに行くぞぉぉ',
         '垃圾游戏，都无好撩嗰',
         '冧斜嗰肥佬真真无死得落着',
@@ -20,7 +21,7 @@ export default function Main({dieOne, dieTwo, round, setView, currentPlayer, ani
     ]
 
     useEffect(() => {
-        const typed = new Typed('.bottom-line', {
+        const typed = new Typed(el.current, {
             strings: quotes, 
             startDelay: 300,
             typeSpeed: 100,
@@ -32,15 +33,13 @@ export default function Main({dieOne, dieTwo, round, setView, currentPlayer, ani
             cursorChar: "!"
         });
 
-        return () => {
-            typed.destroy();
-        };
+        return () => typed.destroy();
     }, []);
 
     return (
         <div className="container">
             <div>
-                <span className="bottom-line"></span>
+                <span className="bottom-line" ref={el}></span>
             </div>
             <div className="img-wrapper" style={{  transform: 'translateX(20px)', marginTop: '15px'}}>
                 <p className="test">{dieOne + dieTwo + 2}</p>
