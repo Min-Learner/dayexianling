@@ -224,10 +224,7 @@ export default function Home() {
     if (!list.length) setCardHint('无人可以攞卡！');
     else {
 
-      for (let j = 0; j < list.length; j++) {
-        if (!j) words = list[j] + words;
-        else words = list[j] + "、" + words;
-      }
+      words = list.join('、') + words;
       setCardHint(words);
 
     }

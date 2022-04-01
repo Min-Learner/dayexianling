@@ -70,7 +70,6 @@ p {
 
 .img-wrapper {
   display: flex;
-  justify-content: center;
 }
 
 .bottom-line, .typed-cursor {
@@ -109,6 +108,7 @@ button {
 
 .test {
   font-size: 100px;
+  line-height: 120px;
 }
 
 .hint {
