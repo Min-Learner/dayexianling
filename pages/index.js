@@ -7,6 +7,9 @@ import Player from '../components/Player'
 import Knight from '../components/Knight'
 import Progress from '../components/Progress'
 import Cheat from '../components/Cheat'
+import io from 'socket.io-client'
+
+let socket = null;
 
 export default function Home() {
 
@@ -32,6 +35,8 @@ export default function Home() {
   let [science, setScience] = useState([]);
   let [cardHint, setCardHint] = useState('');
   let [startIndex, setStartIndex] = useState();
+  let [cheatOne, setCheatOne] = useState();
+  let [cheatTwo, setCheatTwo] = useState();
   let music = [
     '曹操1.mp3',
     '曹操2.mp3',
@@ -41,6 +46,8 @@ export default function Home() {
     '貂蝉1.mp3',
     '关羽1.mp3',
     '郭嘉1.mp3',
+    '郭嘉2.mp3',
+    '郭嘉3.mp3',
     '贾诩1.mp3',
     '刘备1.mp3',
     '刘备2.mp3',
@@ -73,8 +80,19 @@ export default function Home() {
   ]
 
   useEffect(() => {
+    if(!socket) socket = io('https://liar-dice-server.herokuapp.com/')
+  }, [])
 
-    const line = new Audio("/music/" + music[Math.floor(Math.random()*37)]);
+  useEffect(() => {
+    socket?.on('liar', ({liarOne, liarTwo}) => {
+      setCheatOne(liarOne)
+      setCheatTwo(liarTwo)
+    })
+  }, [cheatOne, socket])
+
+  useEffect(() => {
+
+    const line = new Audio("/music/" + music[Math.floor(Math.random()*39)]);
     const sound = new Audio("/music/yyds.m4a");
 
     setTimeout(() => {
@@ -145,17 +163,18 @@ export default function Home() {
 
   }
 
-  let set = () => {  
+  let set = () => {
 
     if (playerList.length && currentPlayer) {
       if (isBasic) {
         setView('main');
       } else {
+        let defaultArray = Array(playerList.length).fill(0);
         setView('knight');
         setPirate(0);
-        setTrade(Array(playerList.length).fill(0));
-        setPolitic(Array(playerList.length).fill(0));
-        setScience(Array(playerList.length).fill(0));
+        setTrade(defaultArray);
+        setPolitic(defaultArray);
+        setScience(defaultArray);
       }
   
       setRound(0);
@@ -197,8 +216,11 @@ export default function Home() {
 
   let roll = () => {
 
-    setDieOne(Math.floor(Math.random()*6));
-    setDieTwo(Math.floor(Math.random()*6));
+    let a = cheatOne >= 0 ? cheatOne : Math.floor(Math.random()*6)
+    let b = cheatTwo >= 0 ? cheatTwo : Math.floor(Math.random()*6)
+
+    setDieOne(a);
+    setDieTwo(b);
     setRound(pre => pre + 1);
     setCount(pre => pre + 1);
     setAnimation(true);
@@ -250,9 +272,10 @@ export default function Home() {
 
       case 'progress':
         return <Progress playerList={playerList} trade={trade} setTrade={setTrade} politic={politic} setPolitic={setPolitic} science={science} setScience={setScience} setView={setView} />
-        
-      case 'cheat':
-        return <Cheat setView={setView} setDieOne={setDieOne} setDieTwo={setDieTwo} setRound={setRound} setCount={setCount} index={index} setIndex={setIndex} playerList={playerList} setCurrentPlayer={setCurrentPlayer} />
+      
+      // 作弊功能应该不会再用，不过难得花了那么多时间做出来，所以保留相应文件和代码下来
+      // case 'cheat':
+      //   return <Cheat setView={setView} setDieOne={setDieOne} setDieTwo={setDieTwo} setRound={setRound} setCount={setCount} index={index} setIndex={setIndex} playerList={playerList} setCurrentPlayer={setCurrentPlayer} />
     
       default:
         break;

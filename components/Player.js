@@ -1,4 +1,12 @@
+import { useEffect, useRef } from "react"
+
 export default function Player({diceData, setView, isBasic, startIndex, playerList}) {
+
+    const target = useRef()
+
+    useEffect(() => {
+        target.current.scrollIntoView()
+    }, [])
 
     return (
         <div className="table-wrapper">
@@ -24,7 +32,7 @@ export default function Player({diceData, setView, isBasic, startIndex, playerLi
                     }
                 </tbody>
             </table>
-            <button onClick={() => isBasic ? setView('main') : setView('knight')} className='buttons'>返回</button>
+            <button ref={target} onClick={() => isBasic ? setView('main') : setView('knight')} className='buttons'>返回</button>
         </div>
     )
 

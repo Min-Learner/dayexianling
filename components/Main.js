@@ -7,6 +7,7 @@ export default function Main({dieOne, dieTwo, round, setView, currentPlayer, ani
     let el = useRef()
     let quotes = [
         '你疴屎揼到屌啊',
+        '我错屌去嗲',
         '你又老閪我，让你又无知道',
         '逗逗你嗻啊',
         '我终于觉得有啲啲仔意思嗲',
@@ -43,7 +44,8 @@ export default function Main({dieOne, dieTwo, round, setView, currentPlayer, ani
             </div>
             <div className="img-wrapper" style={{  transform: 'translateX(20px)', marginTop: '15px'}}>
                 <p className="test">{dieOne + dieTwo + 2}</p>
-                <div  style={{alignSelf: 'flex-start'}} onClick={() => setView('cheat')}>
+                {/* onClick={() => setView('cheat')} 这功能没什么意思，所以暂时抽取相应代码出来。 */}
+                <div  style={{alignSelf: 'flex-start'}}>
                     <Image src={'/daye.png'} width={40} height={40} />
                 </div>
             </div>
