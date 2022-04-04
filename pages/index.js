@@ -6,7 +6,7 @@ import Dice from '../components/Dice'
 import Player from '../components/Player'
 import Knight from '../components/Knight'
 import Progress from '../components/Progress'
-import Cheat from '../components/Cheat'
+import List from '../components/List'
 import io from 'socket.io-client'
 
 let socket = null;
@@ -37,50 +37,17 @@ export default function Home() {
   let [startIndex, setStartIndex] = useState();
   let [cheatOne, setCheatOne] = useState();
   let [cheatTwo, setCheatTwo] = useState();
-  let music = [
-    '曹操1.mp3',
-    '曹操2.mp3',
-    '曹操3.mp3',
-    '曹植1.mp3',
-    '曹植2.mp3',
-    '貂蝉1.mp3',
-    '关羽1.mp3',
-    '郭嘉1.mp3',
-    '郭嘉2.mp3',
-    '郭嘉3.mp3',
-    '贾诩1.mp3',
-    '刘备1.mp3',
-    '刘备2.mp3',
-    '鲁肃1.mp3',
-    '马超1.mp3',
-    '孟获1.mp3',
-    '神吕蒙1.mp3',
-    '神吕蒙2.mp3',
-    '神周瑜1.mp3',
-    '孙权1.mp3',
-    '卧龙1.mp3',
-    '卧龙2.mp3',
-    '徐晃1.mp3',
-    '许褚1.mp3',
-    '荀彧1.mp3',
-    '荀彧2.mp3',
-    '于吉1.mp3',
-    '于吉2.mp3',
-    '张角1.mp3',
-    '张角2.mp3',
-    '甄姬1.mp3',
-    '甄姬2.mp3',
-    '甄姬3.mp3',
-    '甄姬4.mp3',
-    '周瑜1.mp3',
-    '诸葛亮1.mp3',
-    '诸葛亮2.mp3',
-    '诸葛亮3.mp3',
-    '诸葛亮4.mp3'
-  ]
+  let [list, setList] = useState([])
 
   useEffect(() => {
+
     if(!socket) socket = io('https://liar-dice-server.herokuapp.com/')
+
+    fetch('https://liar-dice-server.herokuapp.com/get_list')
+    .then((res) => res.json())
+    .then((data) => setList(data.list))
+    .catch((err) => ('Error occurred', err))
+
   }, [])
 
   useEffect(() => {
@@ -92,15 +59,17 @@ export default function Home() {
 
   useEffect(() => {
 
-    const line = new Audio("/music/" + music[Math.floor(Math.random()*39)]);
-    const sound = new Audio("/music/yyds.m4a");
+    let audio = list[Math.floor(Math.random()*list.length)]
+    let line
+    if(audio) line = new Audio(`https://liar-dice-server.herokuapp.com/uploads/${audio}`)
+    let sound = new Audio("/music/yyds.m4a");
 
     setTimeout(() => {
         setAnimation(false)
     }, 600);
 
     if (dieOne + dieTwo == 5 && count) sound.play();
-    else count && line.play();
+    else count && line && line.play();
 
     if (round !== 0) {
 
@@ -119,9 +88,9 @@ export default function Home() {
       if (dieThree < 3) {
         setPirate(pre => pre + 1);
         setCardHint('无卡攞！')
-      } else if (dieThree === 3) cardHandle(trade, dieOne, "贸易");
-      else if (dieThree === 4) cardHandle(politic, dieOne, "政治");
-      else if (dieThree === 5) cardHandle(science, dieOne, "科技");
+      } else if (dieThree === 3) cardHandle(trade, "贸易");
+      else if (dieThree === 4) cardHandle(politic, "政治");
+      else if (dieThree === 5) cardHandle(science, "科技");
 
     }
 
@@ -190,6 +159,9 @@ export default function Home() {
 
     if (round !== 0) {
 
+      let a = cheatOne >= 0 ? cheatOne : Math.floor(Math.random()*6)
+      let b = cheatTwo >= 0 ? cheatTwo : Math.floor(Math.random()*6) 
+
       if (!isBasic) {
 
         if (dieThree < 3) pirate ? setPirate(pre => pre - 1) : setPirate(5);
@@ -197,8 +169,8 @@ export default function Home() {
 
       }
 
-      setDieOne(Math.floor(Math.random()*6));
-      setDieTwo(Math.floor(Math.random()*6));
+      setDieOne(a);
+      setDieTwo(b);
       setCount(pre => pre + 1);
       setAnimation(true);
 
@@ -233,14 +205,14 @@ export default function Home() {
 
   }
 
-  let cardHandle = (field, redDice, which) => {
+  let cardHandle = (field, which) => {
 
     let copy = [...field];
     let list = [];
     let words = "攞" + which + "卡";
 
     for (let i = 0; i < copy.length; i++) {
-      if (copy[i] !== 0 && copy[i] >= redDice) list.push(playerList[i]);
+      if (copy[i] !== 0 && copy[i] >= dieOne) list.push(playerList[i]);
     }
 
     if (!list.length) setCardHint('无人可以攞卡！');
@@ -272,10 +244,9 @@ export default function Home() {
 
       case 'progress':
         return <Progress playerList={playerList} trade={trade} setTrade={setTrade} politic={politic} setPolitic={setPolitic} science={science} setScience={setScience} setView={setView} />
-      
-      // 作弊功能应该不会再用，不过难得花了那么多时间做出来，所以保留相应文件和代码下来
-      // case 'cheat':
-      //   return <Cheat setView={setView} setDieOne={setDieOne} setDieTwo={setDieTwo} setRound={setRound} setCount={setCount} index={index} setIndex={setIndex} playerList={playerList} setCurrentPlayer={setCurrentPlayer} />
+
+      case 'list':
+        return <List list={list} setList={setList} setView={setView} />
     
       default:
         break;

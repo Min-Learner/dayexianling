@@ -1,7 +1,7 @@
 import styles from '../styles/Setting.module.css';
 import Text from './Text';
 
-export default function Setting({playerSlect, playerList, playerListHandler, playerSelectHandler, set, reset, selected, isBasic, setIsBasic}) {
+export default function Setting({playerSlect, playerList, playerListHandler, playerSelectHandler, set, reset, selected, isBasic, setIsBasic, setView}) {
 
     return (
         <div className={styles.wrapper}>
@@ -36,6 +36,7 @@ export default function Setting({playerSlect, playerList, playerListHandler, pla
             <div className={styles.buttonWrapper}>
                 <button className={styles.button} style={{backgroundColor: '#52b788'}} onClick={set}>确定</button>
                 <button className={styles.button} style={{backgroundColor: '#fca311'}} onClick={reset}>重置</button>
+                <button className={styles.button} style={{backgroundColor: '#dda15e'}} onClick={() => setView('list')}>台词列表</button>
             </div>
         </div>
     )
