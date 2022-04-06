@@ -8,6 +8,7 @@ import Knight from '../components/Knight'
 import Progress from '../components/Progress'
 import List from '../components/List'
 import io from 'socket.io-client'
+import PlayList from '../components/PlayList'
 
 let socket = null;
 
@@ -38,6 +39,7 @@ export default function Home() {
   let [cheatOne, setCheatOne] = useState();
   let [cheatTwo, setCheatTwo] = useState();
   let [list, setList] = useState([])
+  let [playList, setPlayList] = useState([])
 
   useEffect(() => {
 
@@ -48,7 +50,15 @@ export default function Home() {
     .then((data) => setList(data.list))
     .catch((err) => ('Error occurred', err))
 
-  }, [])
+    fetch(process.env.NEXT_PUBLIC_URL + "lrange/redisList/0/999", {
+      headers: {
+          Authorization: process.env.NEXT_PUBLIC_TOKEN
+      }
+      })
+    .then(response => response.json())
+    .then(data => setPlayList(data.result))
+
+  }, [playList])
 
   useEffect(() => {
     socket?.on('liar', ({liarOne, liarTwo}) => {
@@ -59,7 +69,7 @@ export default function Home() {
 
   useEffect(() => {
 
-    let audio = list[Math.floor(Math.random()*list.length)]
+    let audio = playList[Math.floor(Math.random()*playList.length)]
     let line
     if(audio) line = new Audio(`https://liar-dice-server.herokuapp.com/uploads/${audio}`)
     let sound = new Audio("/music/yyds.m4a");
@@ -155,25 +165,16 @@ export default function Home() {
 
   }
 
-  let reroll = () => {
+  let roll = (re) => {
 
-    if (round !== 0) {
+    let a = cheatOne >= 0 ? cheatOne : Math.floor(Math.random()*6)
+    let b = cheatTwo >= 0 ? cheatTwo : Math.floor(Math.random()*6)
 
-      let a = cheatOne >= 0 ? cheatOne : Math.floor(Math.random()*6)
-      let b = cheatTwo >= 0 ? cheatTwo : Math.floor(Math.random()*6) 
-
-      if (!isBasic) {
-
-        if (dieThree < 3) pirate ? setPirate(pre => pre - 1) : setPirate(5);
-        setDiceThree(Math.floor(Math.random()*6));
-
-      }
-
-      setDieOne(a);
-      setDieTwo(b);
-      setCount(pre => pre + 1);
-      setAnimation(true);
-
+    if (!re) {
+      setRound(pre => pre + 1);
+      setIndex(pre => pre +1);
+      setCurrentPlayer(playerList[(index + 1) % playerList.length]);
+    } else {
       let clone = diceRecord;
       clone[dieOne + dieTwo]--;
       setDiceRecord(clone);
@@ -181,25 +182,15 @@ export default function Home() {
       let dataClone = diceData;
       dataClone.pop();
       setDiceData(dataClone);
-
     }
-
-  }
-
-  let roll = () => {
-
-    let a = cheatOne >= 0 ? cheatOne : Math.floor(Math.random()*6)
-    let b = cheatTwo >= 0 ? cheatTwo : Math.floor(Math.random()*6)
 
     setDieOne(a);
     setDieTwo(b);
-    setRound(pre => pre + 1);
     setCount(pre => pre + 1);
     setAnimation(true);
-    setIndex(pre => pre +1);
-    setCurrentPlayer(playerList[(index + 1) % playerList.length]);
     
     if (!isBasic) {
+      if (dieThree < 3 && re) pirate ? setPirate(pre => pre - 1) : setPirate(5);
       setDiceThree(Math.floor(Math.random()*6));
     }
 
@@ -231,10 +222,10 @@ export default function Home() {
         return <Setting playerSlect={playerSlect} playerList={playerList} playerListHandler={playerListHandler} playerSelectHandler={playerSelectHandler} set={set} reset={reset} selected={selected} setView={setView} isBasic={isBasic} setIsBasic={setIsBasic} />;
 
       case 'main':
-        return <Main dieOne={dieOne} dieTwo={dieTwo} round={round} setView={setView} animation={animation} roll={roll} reroll={reroll} currentPlayer={currentPlayer} setCurrentPlayer={setCurrentPlayer} />;
+        return <Main dieOne={dieOne} dieTwo={dieTwo} round={round} setView={setView} animation={animation} roll={roll} currentPlayer={currentPlayer} setCurrentPlayer={setCurrentPlayer} />;
 
       case 'knight':
-        return <Knight dieOne={dieOne} dieTwo={dieTwo} round={round} setView={setView} animation={animation} roll={roll} reroll={reroll} currentPlayer={currentPlayer} dieThree={dieThree} pirate={pirate} cardHint={cardHint} setCurrentPlayer={setCurrentPlayer} />;
+        return <Knight dieOne={dieOne} dieTwo={dieTwo} round={round} setView={setView} animation={animation} roll={roll} currentPlayer={currentPlayer} dieThree={dieThree} pirate={pirate} cardHint={cardHint} setCurrentPlayer={setCurrentPlayer} />;
 
       case 'dice':
         return <Dice diceRecord={diceRecord} setView={setView} isBasic={isBasic} />;
@@ -246,7 +237,10 @@ export default function Home() {
         return <Progress playerList={playerList} trade={trade} setTrade={setTrade} politic={politic} setPolitic={setPolitic} science={science} setScience={setScience} setView={setView} />
 
       case 'list':
-        return <List list={list} setList={setList} setView={setView} />
+        return <List list={list} playList={playList} setView={setView} />
+
+      case 'playlist':
+        return <PlayList setView={setView} setPlayList={setPlayList} playList={playList} />
     
       default:
         break;
@@ -260,6 +254,7 @@ export default function Home() {
         <meta name="description" content="Generated by create next app" />
         <link rel="icon" href="/daye.png" />
       </Head>
+      {/* <div className='warning'>有人搞搞震，啡佢无用去！</div> */}
       {views(view)}
     </div>
   )

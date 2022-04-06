@@ -367,6 +367,8 @@ tbody tr:nth-child(even) {
 
 .close {
   flex: 0 0 25px;
+  display: flex;
+  padding-left: 3px;
 }
 
 .text {
@@ -409,4 +411,33 @@ tbody tr:nth-child(even) {
   font-size: 17px;
   border-radius: 5px;
   background-color: goldenrod;
+}
+
+.search-bar {
+  display: flex;
+  position: fixed;
+  top: 0;
+  max-width: 360px;
+  width: 100%;
+  padding: 10px;
+  background-color: #f45b69;
+}
+
+.input-search {
+  text-align: center;
+  border-radius: 5px;
+  border: none;
+  padding: 6px 0;
+  margin-left: auto;
+  font-size: 14px;
+}
+
+.to-bottom {
+  color: white;
+  margin-left: auto;
+  font-size: 17px;
+  border: 2px solid;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
 }

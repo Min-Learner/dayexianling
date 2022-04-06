@@ -37,6 +37,7 @@ export default function Setting({playerSlect, playerList, playerListHandler, pla
                 <button className={styles.button} style={{backgroundColor: '#52b788'}} onClick={set}>确定</button>
                 <button className={styles.button} style={{backgroundColor: '#fca311'}} onClick={reset}>重置</button>
                 <button className={styles.button} style={{backgroundColor: '#dda15e'}} onClick={() => setView('list')}>台词列表</button>
+                <button className={styles.button} style={{backgroundColor: '#0077b6'}} onClick={() => setView('playlist')}>播放列表</button>
             </div>
         </div>
     )
