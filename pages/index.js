@@ -234,7 +234,7 @@ export default function Home() {
         return <Progress playerList={playerList} trade={trade} setTrade={setTrade} politic={politic} setPolitic={setPolitic} science={science} setScience={setScience} setView={setView} />
 
       case 'list':
-        return <List list={list} setView={setView} />
+        return <List list={list} playList={playList} setView={setView} setPlayList={setPlayList} />
 
       case 'playlist':
         return <PlayList setView={setView} playList={playList} setPlayList={setPlayList} />

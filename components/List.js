@@ -1,7 +1,7 @@
 import Plus from './Plus'
 import { useState, useRef } from 'react'
 
-export default function List({list, setView}) {
+export default function List({list, setView, playList, setPlayList}) {
 
     // let [files, setFiles] = useState([])
     // let [uploadInfo, setUploadInfo] = useState('')
@@ -55,6 +55,8 @@ export default function List({list, setView}) {
         })
         .then(res => res.json())
         .then(res => {
+            let copy = [...playList, e]
+            setPlayList(copy)
             setResponse(res.message)
             setTimeout(() => {
                 setResponse('')
