@@ -1,5 +1,4 @@
 import Close from './Close'
-import { useEffect } from 'react'
 
 export default function PlayList({setView, playList}) {
 
