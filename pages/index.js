@@ -41,14 +41,20 @@ export default function Home() {
   let [list, setList] = useState([])
   let [playList, setPlayList] = useState([])
 
-  useEffect(() => {
+  let loadData = async () => {
 
+    let res = await fetch('https://liar-dice-server.herokuapp.com/get_whole_list')
+    let data = await res.json()
+    setList(data.list)
+
+  }
+
+  useEffect(async () => {
+    await loadData()
     if(!socket) socket = io('https://liar-dice-server.herokuapp.com/')
+  }, [])
 
-    fetch('https://liar-dice-server.herokuapp.com/get_list')
-    .then((res) => res.json())
-    .then((data) => setList(data.list))
-    .catch((err) => ('Error occurred', err))
+  useEffect(() => {
 
     fetch(process.env.NEXT_PUBLIC_URL + "lrange/redisList/0/999", {
       headers: {
