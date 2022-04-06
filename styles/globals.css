@@ -28,6 +28,8 @@ p {
 .dice-wrapper{
   height: 100px;
   position: relative;
+  display: flex;
+  justify-content: space-between;
 }
 #total {
   font-size: 20px;
@@ -134,16 +136,10 @@ button {
 
 .first {
   background: #e63946;
-  position: absolute;
-  top: 0;
-  right: 0;
 }
 
 .second {
   background: #ffb703;
-  position: absolute;
-  top: 0;
-  left: 0;
 }
 
 .dice span {
@@ -433,11 +429,7 @@ tbody tr:nth-child(even) {
 }
 
 .to-bottom {
-  color: white;
   margin-left: auto;
-  font-size: 17px;
-  border: 2px solid;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
+  display: flex;
+  padding: 0;
 }

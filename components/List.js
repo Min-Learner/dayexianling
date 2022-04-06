@@ -1,5 +1,6 @@
 import Plus from './Plus'
 import { useState, useRef } from 'react'
+import Down from './Down'
 
 export default function List({list, setView, playList, setPlayList}) {
 
@@ -139,7 +140,7 @@ export default function List({list, setView, playList, setPlayList}) {
             </div>
             <div className='search-bar'>
                 <input type={'text'} className='input-search' placeholder='输入关键字' onChange={e => handleSearch(e)} />
-                <button type='button' onClick={toBottom} className='to-bottom'>↓</button>
+                <button type='button' onClick={toBottom} className='to-bottom'><Down /></button>
             </div>
             <div style={{width: '100%', padding: '25px 10px 0px 10px'}}>
                 {copy.map(item => {
