@@ -41,30 +41,21 @@ export default function Home() {
   let [list, setList] = useState([])
   let [playList, setPlayList] = useState([])
 
-  let loadData = async () => {
-
-    let res = await fetch('https://liar-dice-server.herokuapp.com/get_whole_list')
-    let data = await res.json()
-    setList(data.list)
-
-  }
-
-  useEffect(async () => {
-    await loadData()
-    if(!socket) socket = io('https://liar-dice-server.herokuapp.com/')
-  }, [])
-
   useEffect(() => {
 
-    fetch(process.env.NEXT_PUBLIC_URL + "lrange/redisList/0/999", {
-      headers: {
-          Authorization: process.env.NEXT_PUBLIC_TOKEN
-      }
-      })
-    .then(response => response.json())
-    .then(data => setPlayList(data.result))
+    if(!socket) socket = io('https://liar-dice-server.herokuapp.com/')
 
-  }, [playList])
+    fetch('https://liar-dice-server.herokuapp.com/get_whole_list')
+    .then((res) => res.json())
+    .then((data) => setList(data.list))
+    .catch((err) => ('Error occurred', err))
+
+    fetch('https://liar-dice-server.herokuapp.com/get_list')
+    .then((res) => res.json())
+    .then((data) => setPlayList(data.data))
+    .catch((err) => ('Error occurred', err))
+
+  }, [])
 
   useEffect(() => {
     socket?.on('liar', ({liarOne, liarTwo}) => {
@@ -243,10 +234,10 @@ export default function Home() {
         return <Progress playerList={playerList} trade={trade} setTrade={setTrade} politic={politic} setPolitic={setPolitic} science={science} setScience={setScience} setView={setView} />
 
       case 'list':
-        return <List list={list} playList={playList} setView={setView} />
+        return <List list={list} setView={setView} />
 
       case 'playlist':
-        return <PlayList setView={setView} setPlayList={setPlayList} playList={playList} />
+        return <PlayList setView={setView} playList={playList} setPlayList={setPlayList} />
     
       default:
         break;

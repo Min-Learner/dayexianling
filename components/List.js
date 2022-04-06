@@ -1,7 +1,7 @@
 import Plus from './Plus'
 import { useState, useRef } from 'react'
 
-export default function List({list, setView, playList}) {
+export default function List({list, setView}) {
 
     // let [files, setFiles] = useState([])
     // let [uploadInfo, setUploadInfo] = useState('')
@@ -23,44 +23,44 @@ export default function List({list, setView, playList}) {
         bottomRef.current.scrollIntoView()
     }
 
-    let fetchData = async (e) => {
+    // let fetchData = async (e) => {
 
-        let res = await fetch(process.env.NEXT_PUBLIC_URL + "lpush/redisList/" + e, {
+    //     let res = await fetch(process.env.NEXT_PUBLIC_URL + "lpush/redisList/" + e, {
+    //         headers: {
+    //           Authorization: process.env.NEXT_PUBLIC_TOKEN
+    //         }
+    //     })
+    //     let data = await res.json()
+    //     data && setResponse('添加成功！')
+
+    // }
+
+    let handdleAdd = (e) => {
+
+        // if (playList.indexOf(e) < 0) {
+        //     await fetchData(e)
+        // } else {setResponse('已在播放列表中！')}
+
+        // setTimeout(() => {
+        //     setResponse('')
+        // }, 700);
+
+        fetch('https://liar-dice-server.herokuapp.com/add_list', {
+            method: 'post',
             headers: {
-              Authorization: process.env.NEXT_PUBLIC_TOKEN
-            }
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({data: e})
         })
-        let data = await res.json()
-        data && setResponse('添加成功！')
-
-    }
-
-    let handdleAdd = async (e) => {
-
-        if (playList.indexOf(e) < 0) {
-            await fetchData(e)
-        } else {setResponse('已在播放列表中！')}
-
-        setTimeout(() => {
-            setResponse('')
-        }, 700);
-
-        // fetch('http://localhost:8000/add_list', {
-        //     method: 'post',
-        //     headers: {
-        //         'Accept': 'application/json',
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify({data: e})
-        // })
-        // .then(res => res.json())
-        // .then(res => {
-        //     setResponse(res.message)
-        //     setTimeout(() => {
-        //         setResponse('')
-        //     }, 700);
-        // })
-        // .catch(err => ('Error occurred', err))
+        .then(res => res.json())
+        .then(res => {
+            setResponse(res.message)
+            setTimeout(() => {
+                setResponse('')
+            }, 700);
+        })
+        .catch(err => ('Error occurred', err))
 
     }
     // let handdleDelete = (e) => {

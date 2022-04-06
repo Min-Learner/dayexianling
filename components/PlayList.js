@@ -1,25 +1,34 @@
 import Close from './Close'
 
-export default function PlayList({setView, playList}) {
+export default function PlayList({setView, playList, setPlayList}) {
 
     let handdleDelete = e => {
-        // fetch('http://localhost:8000/delete_list', {
-        //     method: 'post',
-        //     headers: {
-        //         'Accept': 'application/json',
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify({data: e})
-        // })
-        // .then(res => {return})
-        // .catch(err => ('Error occurred', err))
-        fetch(process.env.NEXT_PUBLIC_URL + "lrem/redisList/1/" + e, {
+
+        fetch('https://liar-dice-server.herokuapp.com/delete_list', {
+            method: 'post',
             headers: {
-                Authorization: process.env.NEXT_PUBLIC_TOKEN
-            }
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({data: e})
+        })
+        .then(res => {
+
+            let copy = [...playList]
+            copy = copy.filter(item => {
+                return item !== e
             })
-        .then(response => response.json())
-        .then(data => {return})
+            setPlayList(copy)
+
+        })
+        .catch(err => ('Error occurred', err))
+        // fetch(process.env.NEXT_PUBLIC_URL + "lrem/redisList/1/" + e, {
+        //     headers: {
+        //         Authorization: process.env.NEXT_PUBLIC_TOKEN
+        //     }
+        //     })
+        // .then(response => response.json())
+        // .then(data => {return})
 
     }
 
