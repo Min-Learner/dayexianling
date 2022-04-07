@@ -1,9 +1,14 @@
 import Close from './Close'
+import Inform from './Inform'
+import { useState } from 'react'
 
 export default function PlayList({setView, playList, setPlayList}) {
 
+    let [display, setDisplay] = useState('')
+
     let handdleDelete = e => {
 
+        setDisplay('处理中...')
         fetch('https://liar-dice-server.herokuapp.com/delete_list', {
             method: 'post',
             headers: {
@@ -19,27 +24,22 @@ export default function PlayList({setView, playList, setPlayList}) {
                 return item !== e
             })
             setPlayList(copy)
+            setDisplay('')
 
         })
         .catch(err => ('Error occurred', err))
-        // fetch(process.env.NEXT_PUBLIC_URL + "lrem/redisList/1/" + e, {
-        //     headers: {
-        //         Authorization: process.env.NEXT_PUBLIC_TOKEN
-        //     }
-        //     })
-        // .then(response => response.json())
-        // .then(data => {return})
 
     }
 
     return(
         <div className="table-wrapper" style={{color: 'white'}}>
+            <Inform message={display} />
             <div style={{width: '100%', padding: '10px 10px 0px 10px'}}>
                 {playList.map(item => {
                     return(
                         <div key={Math.random()} className='line-wrapper'>
                             <span className='text'>
-                                {item}
+                                {item.replace('-原版-', '').replace('.mp3', '')}
                             </span>
                             <span className='close' onClick={() => handdleDelete(item)}>
                                 <Close />

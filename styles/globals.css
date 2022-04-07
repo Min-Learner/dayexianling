@@ -72,11 +72,19 @@ p {
 
 .img-wrapper {
   display: flex;
+  transition: all .3s;
 }
 
-.bottom-line, .typed-cursor {
+.img-wrapper span {
+  line-height: 120px;
+  font-size: 100px;
+  flex: 0 0 100px;
+  text-align: center;
+}
+
+.bottom-line {
   height: 28px;
-  font-size: 25px;
+  font-size: 22px;
   font-weight: bold;
   font-family: 'KaiTi', 'FangSong', serif;
 }
@@ -106,11 +114,6 @@ button {
   width: 70px;
   padding: 15px 0;
   color: white;
-}
-
-.test {
-  font-size: 100px;
-  line-height: 120px;
 }
 
 .hint {
@@ -374,49 +377,16 @@ tbody tr:nth-child(even) {
   text-overflow: ellipsis;
 }
 
-.upload-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  border: 1px solid;
-  border-radius: 10px;
-  width: 95%;
-  padding: 0px 70px 10px;
-  margin: 10px 0;
-}
-
-.input-hint {
-  flex: 100%;
-  font-size: 20px;
-  font-style: italic;
-  height: 50px;
-  line-height: 50px;
-}
-
-.label {
-  background-color: #ffb703;
-  padding: 5px 10px;
-  font-size: 17px;
-  border-radius: 5px;
-}
-
-.upload {
-  color: white;
-  padding: 5px 10px;
-  font-size: 17px;
-  border-radius: 5px;
-  background-color: goldenrod;
-}
-
 .search-bar {
   display: flex;
+  align-items: center;
   position: fixed;
   top: 0;
   max-width: 360px;
   width: 100%;
   padding: 10px;
   background-color: #f45b69;
+  font-size: 16px;
 }
 
 .input-search {
@@ -425,11 +395,20 @@ tbody tr:nth-child(even) {
   border: none;
   padding: 6px 0;
   margin-left: auto;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .to-bottom {
   margin-left: auto;
   display: flex;
-  padding: 0;
+  padding: 5px;
+  border: 2px solid black;
+  width: 30px;
+  transform: rotate(-90deg);
+  border-radius: 50%;
+}
+
+.arrow-wrapper {
+  width: 30px;
+  display: flex;
 }

@@ -4,6 +4,7 @@ import RedDice from './RedDice'
 import YellowDice from './YelloDice'
 import SecondHalf from "./SecondHalf"
 import Image from 'next/image'
+import Total from "./Total"
 
 export default function Main({dieOne, dieTwo, round, setView, currentPlayer, animation, roll, setCurrentPlayer}) {
 
@@ -33,8 +34,7 @@ export default function Main({dieOne, dieTwo, round, setView, currentPlayer, ani
             backDelay: 500,
             smartBackspace: true,
             loop: true,
-            showCursor: true,
-            cursorChar: "!"
+            showCursor: false
         });
 
         return () => typed.destroy();
@@ -42,15 +42,13 @@ export default function Main({dieOne, dieTwo, round, setView, currentPlayer, ani
 
     return (
         <div className="container">
-            <div>
+            <div style={{display: 'flex', alignItems: 'center'}}>
                 <span className="bottom-line" ref={el}></span>
-            </div>
-            <div className="img-wrapper" style={{  transform: 'translateX(20px)', marginTop: '15px'}}>
-                <p className="test">{dieOne + dieTwo + 2}</p>
-                <div  style={{alignSelf: 'flex-start'}}>
-                    <Image src={'/daye.png'} width={40} height={40} />
+                <div>
+                    <Image src={'/daye.png'} width={35} height={35} />
                 </div>
             </div>
+            <Total dieOne={dieOne} dieTwo={dieTwo} animation={animation} />
             <div className="dice-wrapper" style={{width: '250px'}}>
                 <RedDice dieTwo={dieTwo} animation={animation} />
                 <YellowDice dieOne={dieOne} animation={animation} />

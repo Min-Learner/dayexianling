@@ -7,6 +7,7 @@ import YellowDice from './YelloDice'
 import RedDice from './RedDice'
 import SecondHalf from './SecondHalf'
 import Image from 'next/image'
+import Total from './Total'
 
 export default function Knight({dieOne, dieTwo, round, setView, currentPlayer, animation, roll, dieThree, pirate, cardHint, setCurrentPlayer}) {
     
@@ -27,9 +28,7 @@ export default function Knight({dieOne, dieTwo, round, setView, currentPlayer, a
                 <span style={{border: 'none'}} onClick={() => setView('progress')}><Image src='/daye.png' width={35} height={35} /></span>
             </div>
             <p className='message'>{cardHint}</p>
-            <div className="img-wrapper">
-                <p className="test">{dieOne + dieTwo + 2}</p>
-            </div>
+            <Total dieOne={dieOne} dieTwo={dieTwo} animation={animation} />
             <div className="dice-wrapper" style={{width: '100%'}}>
                 <YellowDice dieOne={dieOne} animation={animation} />
                 <RedDice dieTwo={dieTwo} animation={animation} />
