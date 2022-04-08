@@ -25,7 +25,7 @@ export default function Total({dieOne, dieTwo, animation}) {
             <div className='arrow-wrapper'>
                 {dieOne + dieTwo !== 0 ? <Arrow /> : null}
             </div>
-            <div style={{overflow: 'hidden', width: '120px', height: '120px', margin: '0 25px'}}>
+            <div style={{overflow: 'hidden', width: '120px', height: '150px', margin: '0 25px'}}>
                 <div className="img-wrapper" style={{transform: `translateX(-${(dieOne + dieTwo) * 120}px)`}}>
                     <span>2</span>
                     <span>3</span>

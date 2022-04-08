@@ -22,7 +22,7 @@ export default function List({list, playList, setPlayList}) {
     }
 
     let toBottom = () => {
-        bottomRef.current.scrollIntoView()
+        bottomRef.current.scrollIntoView({behavior: 'smooth'})
     }
 
     let handdleAdd = (e) => {
