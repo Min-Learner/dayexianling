@@ -31,18 +31,12 @@ function MyApp({ Component, pageProps }) {
   let [startIndex, setStartIndex] = useState();
   let [cheatOne, setCheatOne] = useState();
   let [cheatTwo, setCheatTwo] = useState();
-  let [list, setList] = useState([])
   let [playList, setPlayList] = useState([])
   const router = useRouter()
 
   useEffect(() => {
 
     if(!socket) socket = io('https://liar-dice-server.herokuapp.com/')
-
-    fetch('https://liar-dice-server.herokuapp.com/get_whole_list')
-    .then((res) => res.json())
-    .then((data) => setList(data.list))
-    .catch((err) => ('Error occurred', err))
 
     fetch('https://liar-dice-server.herokuapp.com/get_list')
     .then((res) => res.json())
@@ -236,7 +230,6 @@ function MyApp({ Component, pageProps }) {
           setPolitic={setPolitic} 
           science={science} 
           setScience={setScience}
-          list={list} 
           playList={playList} 
           setPlayList={setPlayList}
           startIndex={startIndex}
