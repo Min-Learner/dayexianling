@@ -2,6 +2,7 @@ html,
 body {
   padding: 0;
   margin: 0;
+  overflow: hidden;
   font-family: serif;
 }
 
@@ -78,7 +79,7 @@ p {
 .img-wrapper span {
   line-height: 120px;
   font-size: 100px;
-  flex: 0 0 100px;
+  flex: 0 0 120px;
   text-align: center;
 }
 

@@ -1,13 +1,15 @@
-import Plus from './Plus'
+import Plus from '../components/Plus'
 import { useState, useRef } from 'react'
-import Inform from './Inform'
-import Arrow from './Arrow'
+import Inform from '../components/Inform'
+import Arrow from '../components/Arrow'
+import { useRouter } from 'next/router'
 
-export default function List({list, setView, playList, setPlayList}) {
+export default function List({list, playList, setPlayList}) {
 
     let bottomRef = useRef(null)
     let [copy, setCopy] = useState([...list])
     let [response, setResponse] = useState('')
+    const router = useRouter()
 
     let handleSearch = e => {
 
@@ -78,7 +80,7 @@ export default function List({list, setView, playList, setPlayList}) {
                     )
                 })}
             </div>
-            <button ref={bottomRef} className='buttons' onClick={() => setView('setting')}>返回</button>
+            <button ref={bottomRef} className='buttons' onClick={() => router.push('/')}>返回</button>
         </div>
     )
 

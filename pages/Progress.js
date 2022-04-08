@@ -1,8 +1,11 @@
 import styles from '../styles/Progress.module.css';
-import DataHandle from './DataHandle';
+import DataHandle from '../components/DataHandle';
+import { useRouter } from 'next/router';
 
 
-export default function Progress({playerList, trade, setTrade, politic, setPolitic, science, setScience, setView}) {
+export default function Progress({playerList, trade, setTrade, politic, setPolitic, science, setScience}) {
+
+    const router = useRouter()
 
     return (
         <div className={styles.container}>
@@ -34,7 +37,7 @@ export default function Progress({playerList, trade, setTrade, politic, setPolit
                     })}
                 </div>
             </div>
-            <button className={styles.confirm} onClick={() => setView('knight')}>確定</button>   
+            <button className={styles.confirm} onClick={() => router.push('/Knight')}>確定</button>   
         </div>
     )
 

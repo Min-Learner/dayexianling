@@ -1,8 +1,10 @@
 import { useEffect, useRef } from "react"
+import { useRouter } from "next/router"
 
-export default function Player({diceData, setView, isBasic, startIndex, playerList}) {
+export default function Player({diceData, isBasic, startIndex, playerList}) {
 
     const target = useRef()
+    const router = useRouter()
 
     useEffect(() => {
         target.current.scrollIntoView()
@@ -32,7 +34,7 @@ export default function Player({diceData, setView, isBasic, startIndex, playerLi
                     }
                 </tbody>
             </table>
-            <button ref={target} onClick={() => isBasic ? setView('main') : setView('knight')} className='buttons'>返回</button>
+            <button ref={target} onClick={() => isBasic ? router.push('/Main') : router.push('/Knight')} className='buttons'>返回</button>
         </div>
     )
 

@@ -1,10 +1,12 @@
-import Close from './Close'
-import Inform from './Inform'
+import Close from '../components/Close'
+import Inform from '../components/Inform'
 import { useState } from 'react'
+import { useRouter } from 'next/router'
 
-export default function PlayList({setView, playList, setPlayList}) {
+export default function PlayList({playList, setPlayList}) {
 
     let [display, setDisplay] = useState('')
+    const router = useRouter()
 
     let handdleDelete = e => {
 
@@ -48,7 +50,7 @@ export default function PlayList({setView, playList, setPlayList}) {
                     )
                 })}
             </div>
-            <button className='buttons' onClick={() => setView('setting')}>返回</button>
+            <button className='buttons' onClick={() => router.push('/')}>返回</button>
         </div>
     )
 

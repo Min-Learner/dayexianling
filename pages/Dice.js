@@ -1,4 +1,8 @@
-export default function Dice({diceRecord, setView, isBasic}) {
+import { useRouter } from 'next/router'
+
+export default function Dice({diceRecord, isBasic}) {
+
+    const router = useRouter()
 
     return (
         <div className="table-wrapper">
@@ -22,7 +26,7 @@ export default function Dice({diceRecord, setView, isBasic}) {
                     }
                 </tbody>
             </table>
-            <button onClick={() => isBasic ? setView('main') : setView('knight')} className='buttons'>返回</button>
+            <button onClick={() => isBasic ? router.push('/Main') : router.push('/Knight')} className='buttons'>返回</button>
         </div>
     )
 

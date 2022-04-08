@@ -1,18 +1,20 @@
-import Pirate from './Pirate'
-import Politic from './Politic'
-import Science from './Science'
-import Skull from './Skull'
-import Trade from './Trade'
-import YellowDice from './YelloDice'
-import RedDice from './RedDice'
-import SecondHalf from './SecondHalf'
+import Pirate from '../components/Pirate'
+import Politic from '../components/Politic'
+import Science from '../components/Science'
+import Skull from '../components/Skull'
+import Trade from '../components/Trade'
+import YellowDice from '../components/YelloDice'
+import RedDice from '../components/RedDice'
+import SecondHalf from '../components/SecondHalf'
 import Image from 'next/image'
-import Total from './Total'
+import Total from '../components/Total'
+import { useRouter } from 'next/router'
 
-export default function Knight({dieOne, dieTwo, round, setView, currentPlayer, animation, roll, dieThree, pirate, cardHint, setCurrentPlayer}) {
+export default function Knight({dieOne, dieTwo, round, currentPlayer, animation, roll, dieThree, pirate, cardHint, setCurrentPlayer}) {
     
     let x = (pirate % 7 * 39 + 21) + 'px'
     let y = ((pirate % 7) % 2) ? '40%' : '0'
+    const router = useRouter()
 
     return (
         <div className="container">
@@ -25,7 +27,7 @@ export default function Knight({dieOne, dieTwo, round, setView, currentPlayer, a
                 <span>最</span>
                 <span>威</span>
                 <span>武</span>
-                <span style={{border: 'none'}} onClick={() => setView('progress')}><Image src='/daye.png' width={35} height={35} /></span>
+                <span style={{border: 'none'}} onClick={() => router.push('/Progress')}><Image src='/daye.png' width={35} height={35} /></span>
             </div>
             <p className='message'>{cardHint}</p>
             <Total dieOne={dieOne} dieTwo={dieTwo} animation={animation} />
@@ -47,7 +49,7 @@ export default function Knight({dieOne, dieTwo, round, setView, currentPlayer, a
                     </div>
                 </div>
             </div>
-            <SecondHalf setCurrentPlayer={setCurrentPlayer} setView={setView} roll={roll} round={round} currentPlayer={currentPlayer} />
+            <SecondHalf setCurrentPlayer={setCurrentPlayer} roll={roll} round={round} currentPlayer={currentPlayer} />
         </div>
     )
 

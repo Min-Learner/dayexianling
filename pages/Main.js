@@ -1,12 +1,12 @@
 import Typed from "typed.js"
 import { useRef, useEffect } from 'react'
-import RedDice from './RedDice'
-import YellowDice from './YelloDice'
-import SecondHalf from "./SecondHalf"
+import RedDice from '../components/RedDice'
+import YellowDice from '../components/YelloDice'
+import SecondHalf from "../components/SecondHalf"
 import Image from 'next/image'
-import Total from "./Total"
+import Total from "../components/Total"
 
-export default function Main({dieOne, dieTwo, round, setView, currentPlayer, animation, roll, setCurrentPlayer}) {
+export default function Main({dieOne, dieTwo, round, currentPlayer, animation, roll, setCurrentPlayer}) {
 
     let el = useRef()
     let quotes = [
@@ -53,7 +53,7 @@ export default function Main({dieOne, dieTwo, round, setView, currentPlayer, ani
                 <RedDice dieTwo={dieTwo} animation={animation} />
                 <YellowDice dieOne={dieOne} animation={animation} />
             </div>
-            <SecondHalf setCurrentPlayer={setCurrentPlayer} setView={setView} roll={roll} round={round} currentPlayer={currentPlayer} />
+            <SecondHalf setCurrentPlayer={setCurrentPlayer} roll={roll} round={round} currentPlayer={currentPlayer} />
         </div>
     )
 
