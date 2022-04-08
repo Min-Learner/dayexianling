@@ -44,7 +44,7 @@ export default function Main({dieOne, dieTwo, round, currentPlayer, animation, r
         <div className="container">
             <div style={{display: 'flex', alignItems: 'center'}}>
                 <span className="bottom-line" ref={el}></span>
-                <div>
+                <div style={{display: 'flex'}}>
                     <Image src={'/daye.png'} width={35} height={35} />
                 </div>
             </div>
