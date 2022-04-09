@@ -69,7 +69,7 @@ export default function List({list, playList, setPlayList}) {
             <div style={{width: '100%', padding: '25px 10px 0px 10px'}}>
                 {copy.map(item => {
                     return(
-                        <Lists item={item} which={true} handdleAction={handdleAdd} handlePlay={handlePlay} />
+                        <Lists key={Math.random()} item={item} which={true} handdleAction={handdleAdd} handlePlay={handlePlay} />
                     )
                 })}
             </div>

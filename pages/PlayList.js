@@ -39,7 +39,7 @@ export default function PlayList({playList, setPlayList}) {
             <div style={{width: '100%', padding: '10px 10px 0px 10px'}}>
                 {playList.map(item => {
                     return(
-                        <Lists item={item} which={false} handdleAction={handdleDelete} />
+                        <Lists key={Math.random()} item={item} which={false} handdleAction={handdleDelete} />
                     )
                 })}
             </div>
