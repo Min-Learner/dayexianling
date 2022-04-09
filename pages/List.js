@@ -1,13 +1,13 @@
-import Plus from '../components/Plus'
 import { useState, useRef } from 'react'
 import Inform from '../components/Inform'
 import Arrow from '../components/Arrow'
 import { useRouter } from 'next/router'
+import Lists from '../components/Lists'
 
-export default function List({data, playList, setPlayList}) {
+export default function List({list, playList, setPlayList}) {
 
     let bottomRef = useRef(null)
-    let [copy, setCopy] = useState([...data.list])
+    let [copy, setCopy] = useState([...list])
     let [response, setResponse] = useState('')
     const router = useRouter()
 
@@ -15,7 +15,7 @@ export default function List({data, playList, setPlayList}) {
 
         let keyword = e.target.value
         if (keyword) {
-            let filterList = [...data.list].filter(i =>{return i.indexOf(keyword) >= 0})
+            let filterList = [...list].filter(i =>{return i.indexOf(keyword) >= 0})
             setCopy(filterList)
         } else setCopy([...list])
 
@@ -69,32 +69,12 @@ export default function List({data, playList, setPlayList}) {
             <div style={{width: '100%', padding: '25px 10px 0px 10px'}}>
                 {copy.map(item => {
                     return(
-                        <div key={Math.random()} className='line-wrapper'>
-                            <span className='text' onClick={() => handlePlay(item)}>
-                                {item.replace('-原版-', '').replace('.mp3', '')}
-                            </span>
-                            <span className='close' onClick={() => handdleAdd(item)}>
-                                <Plus />
-                            </span>
-                        </div>
+                        <Lists item={item} which={true} handdleAction={handdleAdd} handlePlay={handlePlay} />
                     )
                 })}
             </div>
             <button ref={bottomRef} className='buttons' onClick={() => router.push('/')}>返回</button>
         </div>
     )
-
-}
-
-export async function getStaticProps() {
-
-    const res = await fetch('https://liar-dice-server.herokuapp.com/get_whole_list')
-    const data = await res.json()
-
-    return {
-        props: {
-            data
-        }
-    }
 
 }

@@ -1,12 +1,11 @@
 import Typed from "typed.js"
 import { useRef, useEffect } from 'react'
-import RedDice from '../components/RedDice'
-import YellowDice from '../components/YelloDice'
+import Dices from '../components/Dices'
 import SecondHalf from "../components/SecondHalf"
 import Image from 'next/image'
 import Total from "../components/Total"
 
-export default function Main({dieOne, dieTwo, round, currentPlayer, animation, roll, setCurrentPlayer}) {
+export default function Main() {
 
     let el = useRef()
     let quotes = [
@@ -48,12 +47,11 @@ export default function Main({dieOne, dieTwo, round, currentPlayer, animation, r
                     <Image src={'/daye.png'} width={35} height={35} />
                 </div>
             </div>
-            <Total dieOne={dieOne} dieTwo={dieTwo} animation={animation} />
+            <Total />
             <div className="dice-wrapper" style={{width: '250px'}}>
-                <RedDice dieTwo={dieTwo} animation={animation} />
-                <YellowDice dieOne={dieOne} animation={animation} />
+                <Dices />
             </div>
-            <SecondHalf setCurrentPlayer={setCurrentPlayer} roll={roll} round={round} currentPlayer={currentPlayer} />
+            <SecondHalf />
         </div>
     )
 

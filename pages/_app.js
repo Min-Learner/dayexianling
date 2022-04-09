@@ -1,10 +1,12 @@
 import '../styles/globals.css'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, createContext } from 'react'
 import io from 'socket.io-client'
 import { useRouter } from 'next/router'
 import Layout from '../components/Layout'
+import 'animate.css'
 
-let socket = null;
+let socket = null
+export const animateContext = createContext()
 
 function MyApp({ Component, pageProps }) {
 
@@ -31,12 +33,18 @@ function MyApp({ Component, pageProps }) {
   let [startIndex, setStartIndex] = useState();
   let [cheatOne, setCheatOne] = useState();
   let [cheatTwo, setCheatTwo] = useState();
+  let [list, setList] = useState([])
   let [playList, setPlayList] = useState([])
   const router = useRouter()
 
   useEffect(() => {
 
     if(!socket) socket = io('https://liar-dice-server.herokuapp.com/')
+
+    fetch('https://liar-dice-server.herokuapp.com/get_whole_list')
+    .then((res) => res.json())
+    .then((data) => setList(data.list))
+    .catch((err) => ('Error occurred', err))
 
     fetch('https://liar-dice-server.herokuapp.com/get_list')
     .then((res) => res.json())
@@ -50,7 +58,7 @@ function MyApp({ Component, pageProps }) {
       setCheatOne(liarOne)
       setCheatTwo(liarTwo)
     })
-  }, [cheatOne, socket])
+  }, [socket])
 
   useEffect(() => {
 
@@ -204,40 +212,35 @@ function MyApp({ Component, pageProps }) {
 
   return (
 
-    <Layout>
-      <Component 
-          playerSlect={playerSlect} 
-          playerList={playerList} 
-          playerListHandler={playerListHandler} 
-          playerSelectHandler={playerSelectHandler} 
-          set={set} 
-          reset={reset} 
-          selected={selected} 
-          isBasic={isBasic} 
-          setIsBasic={setIsBasic}
-          dieOne={dieOne} 
-          dieTwo={dieTwo} 
-          round={round} 
-          animation={animation} 
-          roll={roll} 
-          currentPlayer={currentPlayer} 
-          dieThree={dieThree} 
-          pirate={pirate} 
-          cardHint={cardHint} 
-          setCurrentPlayer={setCurrentPlayer} 
-          trade={trade} setTrade={setTrade} 
-          politic={politic} 
-          setPolitic={setPolitic} 
-          science={science} 
-          setScience={setScience}
-          playList={playList} 
-          setPlayList={setPlayList}
-          startIndex={startIndex}
-          diceData={diceData}
-          diceRecord={diceRecord}
-          {...pageProps} 
-        />
-    </Layout>
+    <animateContext.Provider value={{animation, dieOne, dieTwo, dieThree, setCurrentPlayer, roll, round, currentPlayer}}>
+      <Layout>
+        <Component
+            playerSlect={playerSlect} 
+            playerList={playerList} 
+            playerListHandler={playerListHandler} 
+            playerSelectHandler={playerSelectHandler} 
+            set={set} 
+            reset={reset} 
+            selected={selected} 
+            isBasic={isBasic} 
+            setIsBasic={setIsBasic}
+            pirate={pirate} 
+            cardHint={cardHint} 
+            trade={trade} setTrade={setTrade} 
+            politic={politic} 
+            setPolitic={setPolitic} 
+            science={science} 
+            setScience={setScience}
+            list={list} 
+            playList={playList} 
+            setPlayList={setPlayList}
+            startIndex={startIndex}
+            diceData={diceData}
+            diceRecord={diceRecord}
+            {...pageProps} 
+          />
+      </Layout>
+    </animateContext.Provider>
 
   )
 

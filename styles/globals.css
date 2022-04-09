@@ -228,7 +228,7 @@ button {
 }
 
 .opacity {
-  opacity: 0;
+  display: none;
 }
 
 .table-wrapper {
@@ -370,6 +370,7 @@ tbody tr:nth-child(even) {
 }
 
 .text {
+  flex: 1;
   font-size: 18px;
   overflow: hidden;
   white-space: nowrap;

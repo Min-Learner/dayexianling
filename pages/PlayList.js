@@ -1,7 +1,7 @@
-import Close from '../components/Close'
 import Inform from '../components/Inform'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
+import Lists from '../components/Lists'
 
 export default function PlayList({playList, setPlayList}) {
 
@@ -39,14 +39,7 @@ export default function PlayList({playList, setPlayList}) {
             <div style={{width: '100%', padding: '10px 10px 0px 10px'}}>
                 {playList.map(item => {
                     return(
-                        <div key={Math.random()} className='line-wrapper'>
-                            <span className='text'>
-                                {item.replace('-原版-', '').replace('.mp3', '')}
-                            </span>
-                            <span className='close' onClick={() => handdleDelete(item)}>
-                                <Close />
-                            </span>
-                        </div>
+                        <Lists item={item} which={false} handdleAction={handdleDelete} />
                     )
                 })}
             </div>

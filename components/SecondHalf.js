@@ -1,9 +1,13 @@
 import Image from 'next/image'
 import { useRouter } from 'next/router'
+import { useContext } from 'react/'
+import { animateContext } from '../pages/_app'
 
-export default function SecondHalf({setCurrentPlayer, roll, round, currentPlayer}) {
+export default function SecondHalf() {
 
     const router = useRouter()
+    const { animation, setCurrentPlayer, roll, round, currentPlayer } = useContext(animateContext)
+
     return(
 
         <>
@@ -16,6 +20,7 @@ export default function SecondHalf({setCurrentPlayer, roll, round, currentPlayer
                     borderRadius: '5px',
                     overflow: 'hidden'
                 }}
+                className={animation ? 'animate__animated animate__rubberBand' : ''}
             >
                 <Image src="/yyds.jpg" alt="zhongge" width={111} height={97} />
             </div>

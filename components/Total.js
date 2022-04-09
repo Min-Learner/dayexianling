@@ -1,25 +1,26 @@
 import Arrow from './Arrow'
 import Confetti from 'react-confetti'
-import { useRef } from 'react'
+import { useRef, useContext } from 'react'
+import { animateContext } from '../pages/_app'
 
-export default function Total({dieOne, dieTwo, animation}) {
+export default function Total() {
 
     const target = useRef()
+    const {dieOne, dieTwo, animation} = useContext(animateContext)
 
     return (
 
         <div style={{display: 'flex'}}>
             {dieOne + dieTwo === 0 || dieOne + dieTwo == 10 ?
                 animation ?
-                <Confetti 
+                <Confetti
                     recycle={false} 
                     tweenDuration={500} 
                     gravity={0.4}
                     confettiSource={{
-                        x: target.current.getBoundingClientRect().left + 55,
-                        y: target.current.getBoundingClientRect().top + 50,
-                        w: 10,
-                        h: 20
+                        x: target.current.getBoundingClientRect().left + 60,
+                        y: target.current.getBoundingClientRect().top,
+                        h: 70
                     }}
                 /> : 
                 null :
