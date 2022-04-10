@@ -23,7 +23,9 @@ export default function Knight({pirate, cardHint}) {
                 <span>最</span>
                 <span>威</span>
                 <span>武</span>
-                <span style={{border: 'none'}} onClick={() => router.push('/Progress')}><Image alt='' src='/daye.png' width={35} height={35} /></span>
+                <span style={{border: 'none'}} onClick={() => router.push('/Progress')}>
+                    <Image alt='' src='/daye.png' width={35} height={35} />
+                </span>
             </div>
             <p className='message'>{cardHint}</p>
             <Total />

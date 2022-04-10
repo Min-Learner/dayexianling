@@ -412,3 +412,41 @@ tbody tr:nth-child(even) {
   width: 30px;
   display: flex;
 }
+
+.chart-wrapper {
+  width: 90%;
+  position: relative;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.chart-wrapper::before {
+  content: '';
+  position: absolute;
+  left: 38px;
+  display:inline-block;
+  width: 2px;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.row-wrapper {
+  height: 50px;
+  display: flex;
+  align-items: center;
+}
+
+.chart-number {
+  font-size: 30px;
+  color: white;
+  width: 30px;
+  text-align: center;
+  margin-right: 8px;
+}
+
+.chart-data {
+  background-color: #ffba08;
+  text-align: right;
+  padding-right: 5px;
+  font-size: 20px;
+  line-height: 35px;
+}
