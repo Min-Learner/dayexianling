@@ -63,9 +63,11 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
 
     let audio = playList[Math.floor(Math.random()*playList.length)]
-    let line
-    if(audio) line = new Audio(`https://liar-dice-server.herokuapp.com/uploads/${audio}`)
-    let sound = new Audio("/music/yyds.m4a");
+    let daaije = Math.random() > 0.5 ? "/music/yyds.m4a" : "/music/daaije.m4a" 
+    if(audio) {
+      let line = new Audio(`https://liar-dice-server.herokuapp.com/uploads/${audio}`)
+    }
+    let sound = new Audio(daaije);
 
     setTimeout(() => {
         setAnimation(false)
@@ -183,7 +185,9 @@ function MyApp({ Component, pageProps }) {
     setAnimation(true);
     
     if (!isBasic) {
-      if (dieThree < 3 && re) pirate ? setPirate(pre => pre - 1) : setPirate(5);
+      if (dieThree < 3 && re) {
+        pirate ? setPirate(pre => pre - 1) : setPirate(5);
+      }
       setDiceThree(Math.floor(Math.random()*6));
     }
 
@@ -215,30 +219,30 @@ function MyApp({ Component, pageProps }) {
     <animateContext.Provider value={{animation, dieOne, dieTwo, dieThree, setCurrentPlayer, roll, round, currentPlayer}}>
       <Layout>
         <Component
-            playerSlect={playerSlect} 
-            playerList={playerList} 
-            playerListHandler={playerListHandler} 
-            playerSelectHandler={playerSelectHandler} 
-            set={set} 
-            reset={reset} 
-            selected={selected} 
-            isBasic={isBasic} 
-            setIsBasic={setIsBasic}
-            pirate={pirate} 
-            cardHint={cardHint} 
-            trade={trade} setTrade={setTrade} 
-            politic={politic} 
-            setPolitic={setPolitic} 
-            science={science} 
-            setScience={setScience}
-            list={list} 
-            playList={playList} 
-            setPlayList={setPlayList}
-            startIndex={startIndex}
-            diceData={diceData}
-            diceRecord={diceRecord}
-            {...pageProps} 
-          />
+          playerSlect={playerSlect} 
+          playerList={playerList} 
+          playerListHandler={playerListHandler} 
+          playerSelectHandler={playerSelectHandler} 
+          set={set} 
+          reset={reset} 
+          selected={selected} 
+          isBasic={isBasic} 
+          setIsBasic={setIsBasic}
+          pirate={pirate} 
+          cardHint={cardHint} 
+          trade={trade} setTrade={setTrade} 
+          politic={politic} 
+          setPolitic={setPolitic} 
+          science={science} 
+          setScience={setScience}
+          list={list} 
+          playList={playList} 
+          setPlayList={setPlayList}
+          startIndex={startIndex}
+          diceData={diceData}
+          diceRecord={diceRecord}
+          {...pageProps} 
+        />
       </Layout>
     </animateContext.Provider>
 

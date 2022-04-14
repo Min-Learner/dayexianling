@@ -33,22 +33,26 @@ export default function Home({playerSlect, playerList, playerListHandler, player
             </div>
             <p className={styles.text + ' animate__animated animate__bounceInLeft'}>按座位顺序选择玩家</p>
             <div className={styles.playerSlectWrapper}>
-                {playerSlect.map((player, index) => {
-                return (
-                    <p key={index} className={styles.player} onClick={() => playerSelectHandler(player)}>
-                        {player}
-                    </p>
-                );
+                {playerSlect.map((player) => {
+                    return (
+                        <p key={player} className={styles.player} onClick={() => playerSelectHandler(player)}>
+                            {player}
+                        </p>
+                    );
                 })}
             </div>
             <p className={styles.text + ' animate__animated animate__bounceInRight'}>选择开始玩家</p>
             <div className={styles.playerSlectWrapper}>
                 {playerList.map((player, index) => {
-                return (
-                    <p key={Math.random()} onClick={() => {playerListHandler(player, index)}} className={selected[index] ? `${styles.player} ${styles.transform}` : `${styles.player} ${styles.opacity}`}>
-                    {player}
-                    </p>
-                )
+                    return (
+                        <p key={player} onClick={() => {playerListHandler(player, index)}}
+                            className={selected[index] ? 
+                            `${styles.player} ${styles.transform}` : 
+                            `${styles.player} ${styles.opacity}`}
+                        >
+                            {player}
+                        </p>
+                    )
                 })}
             </div>
             <div className='mode-wrapper'>
