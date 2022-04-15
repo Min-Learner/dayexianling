@@ -73,7 +73,7 @@ function MyApp({ Component, pageProps }) {
         setAnimation(false)
     }, 1500);
 
-    if (dieOne + dieTwo == 5 && count) sound.play();
+    if (dieOne + dieTwo == 0 || dieOne + dieTwo == 10) sound.play();
     else count && line && line.play();
 
     if (round !== 0) {
