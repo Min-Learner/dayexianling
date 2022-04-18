@@ -41,11 +41,11 @@ function MyApp({ Component, pageProps }) {
 
   useEffect(() => {
 
-    if(!socket) socket = io('https://liar-dice-server.herokuapp.com')
+    if(!socket) socket = io('https://daaije-server.herokuapp.com')
 
     if (!list.length) {
 
-      fetch('https://liar-dice-server.herokuapp.com/get_whole_list')
+      fetch('https://daaije-server.herokuapp.com/get_whole_list')
       .then((res) => res.json())
       .then((data) => setList(data.list))
       .catch((err) => ('Error occurred', err))
@@ -54,7 +54,7 @@ function MyApp({ Component, pageProps }) {
 
     if (!playList.length) {
 
-      fetch('https://liar-dice-server.herokuapp.com/get_list')
+      fetch('https://daaije-server.herokuapp.com/get_list')
       .then((res) => res.json())
       .then((data) => setPlayList(data.data))
       .catch((err) => ('Error occurred', err))
@@ -77,7 +77,7 @@ function MyApp({ Component, pageProps }) {
         setDiceThree(data.ned)
         setCardHint(data.nch)
       }
-console.log('got data')
+
     })
 
     socket?.on('progress-info', data => {
@@ -103,7 +103,7 @@ console.log('got data')
       setTrade(defaultArray);
       setPolitic(defaultArray);
       setScience(defaultArray);
-console.log('got init data')
+
     })
 
   }, [socket])
@@ -114,7 +114,7 @@ console.log('got init data')
       let line
       let daaije = Math.random() > 0.5 ? "/music/yyds.m4a" : "/music/daaije.m4a" 
       if(audio) {
-        line = new Audio(`https://liar-dice-server.herokuapp.com/uploads/${audio}`)
+        line = new Audio(`https://daaije-server.herokuapp.com/uploads/${audio}`)
       }
       let sound = new Audio(daaije)
 
