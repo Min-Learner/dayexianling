@@ -13,10 +13,7 @@ export default function DataHandle({field, setField, index, data, dice}) {
         if (!or && clone[index] > 0) clone[index]--;
         setField(clone);
 
-        let data = {
-            dice,
-            clone
-        }
+        let data = {dice, clone}
         socket.emit('send-progress-info', data)
 
     }

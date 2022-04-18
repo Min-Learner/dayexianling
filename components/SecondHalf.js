@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useContext } from 'react/'
 import { animateContext } from '../pages/_app'
@@ -15,14 +14,14 @@ export default function SecondHalf() {
             <p className="hint">老点大爷帅气头像摇骰子</p>
             <div onClick={() => roll(false)}
                 style={{
-                    padding: 0,
-                    display: 'flex',
                     borderRadius: '5px',
-                    overflow: 'hidden'
+                    width: '120px',
+                    height: '100px',
+                    backgroundImage: 'url("yyds.jpg")',
+                    backgroundSize: 'cover'
                 }}
                 className={animation ? 'animate__animated animate__rubberBand' : ''}
             >
-                <Image src="/yyds.jpg" alt="zhongge" width={111} height={97} />
             </div>
             <div className='button-wrapper'>
                 <button onClick={() => {router.push('/'); setCurrentPlayer('')}} className="reset">设定</button>

@@ -15,7 +15,9 @@ export default function Knight({pirate, cardHint}) {
     return (
         <div className="container">
             <div className='progress'>
-                <div style={{transform: `translate(${x}, ${y})`, zIndex: 999}}><Pirate /></div>
+                <div style={{transform: `translate(${x}, ${y})`, zIndex: 999}}>
+                    <Pirate />
+                </div>
                 <span>大</span>
                 <span>爷</span>
                 <span>世</span>

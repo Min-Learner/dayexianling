@@ -72,7 +72,7 @@ function MyApp({ Component, pageProps }) {
       setAnimation(true)
       setCurrentPlayer(data.ncp)
       setAudio(data.nau)
-      if (data.npa) {
+      if (data.nch) {
         setPirate(data.npa)
         setDiceThree(data.ned)
         setCardHint(data.nch)
@@ -98,11 +98,7 @@ function MyApp({ Component, pageProps }) {
       setDiceData([])
       setDarr(initData.nda)
 
-      let defaultArray = Array(initData.npl.length).fill(0);
-      setPirate(0);
-      setTrade(defaultArray);
-      setPolitic(defaultArray);
-      setScience(defaultArray);
+      initKnight(initData.npl.length)
 
     })
 
@@ -142,14 +138,7 @@ function MyApp({ Component, pageProps }) {
       nau: audio,
     }
 
-    if (!isBasic) 
-      data = {
-        ...data,
-        ned: dieThree,
-        npa: pirate,
-        nch: cardHint
-      }
-
+    if (!isBasic) data = {...data, ned: dieThree, npa: pirate, nch: cardHint}
     count && socket.emit('send', data)
 
   }, [count])
@@ -197,19 +186,15 @@ function MyApp({ Component, pageProps }) {
       npl: playerList,
       nsi: startIndex,
       nps: playerSlect,
-      nda: darr,
+      nda: darr
     }
 
     if (playerList.length && currentPlayer) {
       if (isBasic) {
         router.push('/Main');
       } else {
-        let defaultArray = Array(playerList.length).fill(0);
         router.push('/Knight');
-        setPirate(0);
-        setTrade(defaultArray);
-        setPolitic(defaultArray);
-        setScience(defaultArray);
+        initKnight(playerList.length)
       }
   
       setRound(0);
@@ -299,6 +284,13 @@ function MyApp({ Component, pageProps }) {
 
   }
 
+  let initKnight = length => {
+    let defaultArray = Array(length).fill(0);
+    setPirate(0);
+    setTrade(defaultArray);
+    setPolitic(defaultArray);
+    setScience(defaultArray);
+  }
 
   return (
 
