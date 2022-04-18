@@ -18,22 +18,22 @@ export default function Progress({playerList, trade, setTrade, politic, setPolit
             <div className={styles.secondWrapper}>
                 <div style={{flex: 1}}>
                     {playerList.map(p => {
-                        return <div className={styles.listCell} key={Math.random()}>{p}</div>
+                        return <div className={styles.listCell} key={p}>{p}</div>
                     })}
                 </div>
                 <div className={styles.dataWrapper}>
                     {trade.map((data, index) => {
-                        return <DataHandle  key={Math.random() * Math.random()} field={trade} setField={setTrade} index={index} data={data} />
+                        return <DataHandle  key={index} dice={3} field={trade} setField={setTrade} index={index} data={data} />
                     })}
                 </div>
                 <div className={styles.dataWrapper}>
                     {politic.map((data, index) => {
-                        return <DataHandle  key={Math.random() * Math.random()} field={politic} setField={setPolitic} index={index} data={data} />
+                        return <DataHandle  key={index} dice={4} field={politic} setField={setPolitic} index={index} data={data} />
                     })}
                 </div>
                 <div className={styles.dataWrapper}>
                     {science.map((data, index) => {
-                        return <DataHandle  key={Math.random() * Math.random()} field={science} setField={setScience} index={index} data={data} />
+                        return <DataHandle  key={index} dice={5} field={science} setField={setScience} index={index} data={data} />
                     })}
                 </div>
             </div>

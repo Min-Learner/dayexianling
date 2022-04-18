@@ -11,19 +11,20 @@ export const animateContext = createContext()
 function MyApp({ Component, pageProps }) {
 
   let players = ['仲', '高', '宇', '敏', '霞', '炜'];
+  let deDire = Array(11).fill(0);
+  let deSec = Array(6).fill(false)
   let [playerSlect, setPlayerSlect] = useState(players);
   let [playerList, setPlayerList] = useState([]);
   let [dieOne, setDieOne] = useState(2);
   let [dieTwo, setDieTwo] = useState(3);
   let [dieThree, setDiceThree] = useState(0);
   let [round, setRound] = useState(0);
-  let [diceRecord, setDiceRecord] = useState(Array(11).fill(0)); 
+  let [diceRecord, setDiceRecord] = useState(deDire); 
   let [index, setIndex] = useState();
   let [currentPlayer, setCurrentPlayer] = useState();
   let [animation, setAnimation] = useState(false);
-  let [count, setCount] = useState(0);
   let [diceData, setDiceData] = useState([]);
-  let [selected, setSelected] = useState(Array(6).fill(false));
+  let [selected, setSelected] = useState(deSec);
   let [isBasic, setIsBasic] = useState(true);
   let [pirate, setPirate] = useState(0);
   let [trade, setTrade] = useState([]);
@@ -31,73 +32,125 @@ function MyApp({ Component, pageProps }) {
   let [science, setScience] = useState([]);
   let [cardHint, setCardHint] = useState('');
   let [startIndex, setStartIndex] = useState();
-  let [cheatOne, setCheatOne] = useState();
-  let [cheatTwo, setCheatTwo] = useState();
   let [list, setList] = useState([])
   let [playList, setPlayList] = useState([])
+  let [darr, setDarr] = useState([0, 10])
+  let [audio, setAudio] = useState('')
+  let [count, setCount] = useState(0)
   const router = useRouter()
 
   useEffect(() => {
 
-    if(!socket) socket = io('https://liar-dice-server.herokuapp.com/')
+    if(!socket) socket = io('https://liar-dice-server.herokuapp.com')
 
-    fetch('https://liar-dice-server.herokuapp.com/get_whole_list')
-    .then((res) => res.json())
-    .then((data) => setList(data.list))
-    .catch((err) => ('Error occurred', err))
+    if (!list.length) {
 
-    fetch('https://liar-dice-server.herokuapp.com/get_list')
-    .then((res) => res.json())
-    .then((data) => setPlayList(data.data))
-    .catch((err) => ('Error occurred', err))
+      fetch('https://liar-dice-server.herokuapp.com/get_whole_list')
+      .then((res) => res.json())
+      .then((data) => setList(data.list))
+      .catch((err) => ('Error occurred', err))
 
-  }, [])
+    }
 
-  useEffect(() => {
-    socket?.on('liar', ({liarOne, liarTwo}) => {
-      setCheatOne(liarOne)
-      setCheatTwo(liarTwo)
+    if (!playList.length) {
+
+      fetch('https://liar-dice-server.herokuapp.com/get_list')
+      .then((res) => res.json())
+      .then((data) => setPlayList(data.data))
+      .catch((err) => ('Error occurred', err))
+
+    }
+
+    socket?.on('get', data => {
+
+      setDieOne(data.ndo)
+      setDieTwo(data.ndt)
+      setRound(data.nrd)
+      setIndex(data.nix)
+      setDiceRecord(data.ndr)
+      setDiceData(data.ndd)
+      setAnimation(true)
+      setCurrentPlayer(data.ncp)
+      setAudio(data.nau)
+      if (data.npa) {
+        setPirate(data.npa)
+        setDiceThree(data.ned)
+        setCardHint(data.nch)
+      }
+
     })
+
+    socket?.on('progress-info', data => {
+      if (data.dice === 3) setTrade(data.clone)
+      else if (data.dice === 4) setPolitic(data.clone)
+      else if (data.dice === 5) setScience(data.clone)
+    })
+   
+    socket?.on('init', initData => {
+
+      setCurrentPlayer(initData.ncp)
+      setIndex(initData.npl.indexOf(initData.ncp))
+      setPlayerList(initData.npl)
+      setStartIndex(initData.nsi)
+      setPlayerSlect(initData.nps)
+      setRound(0)
+      setDiceRecord(Array(11).fill(0))
+      setDiceData([])
+      setDarr(initData.nda)
+
+      let defaultArray = Array(playerList.length).fill(0);
+      setPirate(0);
+      setTrade(defaultArray);
+      setPolitic(defaultArray);
+      setScience(defaultArray);
+
+    })
+
   }, [socket])
 
   useEffect(() => {
 
-    let audio = playList[Math.floor(Math.random()*playList.length)]
-    let daaije = Math.random() > 0.5 ? "/music/yyds.m4a" : "/music/daaije.m4a" 
-    if(audio) {
-      let line = new Audio(`https://liar-dice-server.herokuapp.com/uploads/${audio}`)
-    }
-    let sound = new Audio(daaije);
+    if (audio) {
+      let line
+      let daaije = Math.random() > 0.5 ? "/music/yyds.m4a" : "/music/daaije.m4a" 
+      if(audio) {
+        line = new Audio(`https://liar-dice-server.herokuapp.com/uploads/${audio}`)
+      }
+      let sound = new Audio(daaije)
 
-    setTimeout(() => {
-        setAnimation(false)
-    }, 1500);
+      setTimeout(() => {
+          setAnimation(false)
+          setAudio('')
+      }, 1500);
 
-    if (dieOne + dieTwo == 0 || dieOne + dieTwo == 10) sound.play();
-    else count && line && line.play();
-
-    if (round !== 0) {
-
-        let clone = diceRecord;
-        clone[dieOne + dieTwo]++;
-        setDiceRecord(clone);
-
-        let dataClone = diceData;
-        dataClone.push(dieOne + dieTwo + 2);
-        setDiceData(dataClone);
-
+      if (darr.indexOf(dieOne + dieTwo) > -1) sound.play();
+      else line && line.play();
     }
 
-    if (!isBasic) {
+  }, [audio])
 
-      if (dieThree < 3) {
-        setPirate(pre => pre + 1);
-        setCardHint('无卡攞！')
-      } else if (dieThree === 3) cardHandle(trade, "贸易");
-      else if (dieThree === 4) cardHandle(politic, "政治");
-      else if (dieThree === 5) cardHandle(science, "科技");
+  useEffect(() => {
 
+    let data = {
+      ndo: dieOne,
+      ndt: dieTwo,
+      nrd: round,
+      nix: index,
+      ndr: diceRecord,
+      ndd: diceData,
+      ncp: currentPlayer,
+      nau: audio,
     }
+
+    if (!isBasic) 
+      data = {
+        ...data,
+        ned: dieThree,
+        npa: pirate,
+        nch: cardHint
+      }
+
+    socket.emit('send', data)
 
   }, [count])
 
@@ -133,11 +186,19 @@ function MyApp({ Component, pageProps }) {
     setPlayerList([]);
     setPlayerSlect(players);
     setCurrentPlayer();
-    setSelected(Array(6).fill(false))
+    setSelected(deSec)
 
   }
 
   let set = () => {
+
+    let data = {
+      ncp: currentPlayer,
+      npl: playerList,
+      nsi: startIndex,
+      nps: playerSlect,
+      nda: darr,
+    }
 
     if (playerList.length && currentPlayer) {
       if (isBasic) {
@@ -152,63 +213,88 @@ function MyApp({ Component, pageProps }) {
       }
   
       setRound(0);
-      setDiceRecord(Array(11).fill(0));
+      setDiceRecord(deDire);
       setIndex(playerList.indexOf(currentPlayer));
       setDiceData([]);
-      setSelected(Array(6).fill(false));
+      setSelected(deSec);
+      socket.emit('start', data)
     }
 
   }
 
   let roll = (re) => {
 
-    let a = cheatOne >= 0 ? cheatOne : Math.floor(Math.random()*6)
-    let b = cheatTwo >= 0 ? cheatTwo : Math.floor(Math.random()*6)
+    let clone = diceRecord
+    let dataClone = diceData
+    let ra = Math.floor(Math.random()*6)
+    let rb = Math.floor(Math.random()*6)
 
-    if (!re) {
-      setRound(pre => pre + 1);
-      setIndex(pre => pre +1);
-      setCurrentPlayer(playerList[(index + 1) % playerList.length]);
-    } else {
-      let clone = diceRecord;
+    if (re) {
       clone[dieOne + dieTwo]--;
-      setDiceRecord(clone);
-
-      let dataClone = diceData;
       dataClone.pop();
-      setDiceData(dataClone);
+    } else {
+      setRound(pre => pre + 1);
+      setIndex(pre => pre + 1);
+      setCurrentPlayer(playerList[(index + 1) % playerList.length]);
     }
 
-    setDieOne(a);
-    setDieTwo(b);
-    setCount(pre => pre + 1);
+    clone[ra + rb]++;
+    dataClone.push(ra + rb + 2);
+    setDiceRecord(clone);
+    setDiceData(dataClone);
+    setDieOne(ra);
+    setDieTwo(rb);
     setAnimation(true);
+    setAudio(playList[Math.floor(Math.random()*playList.length)])
+    setCount(pre => pre + 1)
     
     if (!isBasic) {
+      let rc = Math.floor(Math.random()*6)
+
       if (dieThree < 3 && re) {
         pirate ? setPirate(pre => pre - 1) : setPirate(5);
       }
-      setDiceThree(Math.floor(Math.random()*6));
+
+      handdleDiceThree(rc, ra)
+      setDiceThree(rc);
     }
 
   }
 
-  let cardHandle = (field, which) => {
+  let cardHandle = (field, which, dice) => {
 
     let copy = [...field];
     let list = [];
     let words = "攞" + which + "卡";
 
     for (let i = 0; i < copy.length; i++) {
-      if (copy[i] !== 0 && copy[i] >= dieOne) list.push(playerList[i]);
+      if (copy[i] !== 0 && copy[i] >= dice) list.push(playerList[i]);
     }
 
     if (!list.length) setCardHint('无人可以攞卡！');
     else {
-
       words = list.join('、') + words;
       setCardHint(words);
+    }
 
+  }
+
+  let handdleDiceThree = (rc, ra) => {
+
+    switch(rc) {
+      case 3:
+        cardHandle(trade, "贸易", ra)
+        break
+      case 4:
+        cardHandle(politic, "政治", ra)
+        break
+      case 5:
+        cardHandle(science, "科技", ra)
+        break
+      default:
+        setPirate(pre => pre + 1);
+        setCardHint('无卡攞！')
+        break
     }
 
   }
@@ -216,9 +302,11 @@ function MyApp({ Component, pageProps }) {
 
   return (
 
-    <animateContext.Provider value={{animation, dieOne, dieTwo, dieThree, setCurrentPlayer, roll, round, currentPlayer}}>
+    <animateContext.Provider value={{animation, dieOne, dieTwo, dieThree, setCurrentPlayer, roll, round, currentPlayer, socket}}>
       <Layout>
         <Component
+          darr={darr}
+          setDarr={setDarr}
           playerSlect={playerSlect} 
           playerList={playerList} 
           playerListHandler={playerListHandler} 

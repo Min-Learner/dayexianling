@@ -1,6 +1,10 @@
-import styles from '../styles/Progress.module.css';
+import styles from '../styles/Progress.module.css'
+import { animateContext } from '../pages/_app'
+import { useContext } from 'react'
 
-export default function DataHandle({field, setField, index, data}) {
+export default function DataHandle({field, setField, index, data, dice}) {
+
+    let { socket } = useContext(animateContext)
 
     let dataHandle = (or, index) => {
 
@@ -8,6 +12,13 @@ export default function DataHandle({field, setField, index, data}) {
         if (or && clone[index] < 5) clone[index]++;
         if (!or && clone[index] > 0) clone[index]--;
         setField(clone);
+
+        let data = {
+            dice,
+            clone
+        }
+        socket.emit('send-progress-info', data)
+
     }
 
     return (

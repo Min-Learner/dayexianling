@@ -16,7 +16,7 @@
     width: 100%;
     display: flex;
     justify-content: space-around;
-    margin: 20px 0;
+    margin: 15px 0;
     height: 35px;
 }
 
@@ -56,4 +56,14 @@
 
 .transform {
     transform: scale(1.3);
+}
+
+.audioNum {
+    flex: 0 0 15%;
+    padding: 3px 0;
+    font-size: 18px;
+    margin-bottom: 7px;
+    background-color: azure;
+    border-radius: 5px;
+    opacity: .3;
 }

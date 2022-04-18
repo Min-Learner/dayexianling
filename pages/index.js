@@ -4,9 +4,29 @@ import Text from '../components/Text'
 import { useRouter } from 'next/router'
 import Line from '../components/Line'
 
-export default function Home({playerSlect, playerList, playerListHandler, playerSelectHandler, set, reset, selected, isBasic, setIsBasic}) {
+export default function Home({darr, setDarr, playerSlect, playerList, playerListHandler, playerSelectHandler, set, reset, selected, isBasic, setIsBasic}) {
 
   const router = useRouter()
+
+  let arr = () => {
+
+    let arr = []
+    for(let i = 2; i < 13; i++) arr.push(i)
+    return arr
+
+  }
+
+  let audioNumber = e => {
+
+    let num = e - 2
+    if (darr.indexOf(num) > -1) {
+        let narr = darr.filter(i => {
+            return i !== num
+        })
+        setDarr(narr)
+    } else setDarr([...darr, num])
+
+  }
 
   return (
     <>
@@ -16,7 +36,14 @@ export default function Home({playerSlect, playerList, playerListHandler, player
         <link rel="icon" href="/daye.png" />
       </Head>
       <div className={styles.wrapper}>
-            <div style={{position: 'relative', width: '100%', display: 'flex', justifyContent: 'center'}}>
+            <div style={{position: 'relative',
+                    width: '100%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    padding: '15px 0'
+                }}
+            >
                 <div
                     style={{
                         width: '90%',
@@ -27,7 +54,9 @@ export default function Home({playerSlect, playerList, playerListHandler, player
                 >
                     <Line />
                 </div>
-                <div style={{width: '80%', marginBottom: '25px'}} className='animate__animated animate__hinge animate__delay-1s'>
+                <div style={{width: '80%'}} 
+                    className='animate__animated animate__hinge animate__delay-1s'
+                >
                     <Text />
                 </div>
             </div>
@@ -51,6 +80,28 @@ export default function Home({playerSlect, playerList, playerListHandler, player
                             `${styles.player} ${styles.opacity}`}
                         >
                             {player}
+                        </p>
+                    )
+                })}
+            </div>
+            <p className={styles.text + ' animate__animated animate__tada'}>选择大爷录音播放数字</p>
+            <div style={{
+                    display: 'flex',
+                    justifyContent: 'space-around',
+                    alignItems: 'center',
+                    flexWrap: 'wrap',
+                    width: '100%',
+                    margin: '15px 0 10px 0'
+                }}
+            >
+                {arr().map((number) => {
+                    return (
+                        <p key={number} 
+                            className={styles.audioNum}
+                            style={darr.indexOf(number - 2) > -1 ? {opacity: 1} : null}
+                            onClick={() => audioNumber(number)}
+                        >
+                            {number}
                         </p>
                     )
                 })}
