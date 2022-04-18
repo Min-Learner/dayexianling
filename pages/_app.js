@@ -77,7 +77,7 @@ function MyApp({ Component, pageProps }) {
         setDiceThree(data.ned)
         setCardHint(data.nch)
       }
-
+console.log('got data')
     })
 
     socket?.on('progress-info', data => {
@@ -103,7 +103,7 @@ function MyApp({ Component, pageProps }) {
       setTrade(defaultArray);
       setPolitic(defaultArray);
       setScience(defaultArray);
-
+console.log('got init data')
     })
 
   }, [socket])
