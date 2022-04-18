@@ -98,7 +98,7 @@ function MyApp({ Component, pageProps }) {
       setDiceData([])
       setDarr(initData.nda)
 
-      let defaultArray = Array(playerList.length).fill(0);
+      let defaultArray = Array(initData.npl.length).fill(0);
       setPirate(0);
       setTrade(defaultArray);
       setPolitic(defaultArray);
@@ -150,7 +150,7 @@ function MyApp({ Component, pageProps }) {
         nch: cardHint
       }
 
-    socket.emit('send', data)
+    count && socket.emit('send', data)
 
   }, [count])
 
