@@ -11,7 +11,7 @@ export default function PlayList({playList, setPlayList}) {
     let handdleDelete = e => {
 
         setDisplay('处理中...')
-        fetch('https://liar-dice-server.herokuapp.com/delete_list', {
+        fetch('https://daaije-server.herokuapp.com/delete_list', {
             method: 'post',
             headers: {
                 'Accept': 'application/json',

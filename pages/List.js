@@ -28,7 +28,7 @@ export default function List({list, playList, setPlayList}) {
     let handdleAdd = (e) => {
 
         setResponse('处理中...')
-        fetch('https://liar-dice-server.herokuapp.com/add_list', {
+        fetch('https://daaije-server.herokuapp.com/add_list', {
             method: 'post',
             headers: {
                 'Accept': 'application/json',
@@ -53,7 +53,7 @@ export default function List({list, playList, setPlayList}) {
 
     let handlePlay = (e) => {
 
-        let url = 'https://liar-dice-server.herokuapp.com/uploads/' + e
+        let url = 'https://daaije-server.herokuapp.com/uploads/' + e
         let audio = new Audio(url)
         audio.play()
 
