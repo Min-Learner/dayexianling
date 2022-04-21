@@ -10,12 +10,14 @@ export default function SecondHalf() {
     return(
 
         <>
-            <p id="total">第 <span style={{fontWeight: 'bold'}}>{round}</span> 次，下一个: <span style={{fontWeight: 'bold'}}>{currentPlayer}</span></p>
+            <p id="total">
+                第 <span style={{fontWeight: 'bold'}}>{round}</span> 次，下一个: <span style={{fontWeight: 'bold'}}>{currentPlayer}</span>
+            </p>
             <p className="hint">老点大爷帅气头像摇骰子</p>
             <div onClick={() => roll(false)}
                 style={{
                     borderRadius: '5px',
-                    width: '120px',
+                    width: '110px',
                     height: '100px',
                     backgroundImage: 'url("yyds.jpg")',
                     backgroundSize: 'cover'

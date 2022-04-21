@@ -37,10 +37,10 @@ p {
 }
 
 .shake{
-  animation: wobble 0.5s;
+  animation: shake 0.5s;
 }
 
-@keyframes wobble {
+@keyframes shake {
   from {
     transform: translate3d(0, 0, 0);
   }
